@@ -177,8 +177,14 @@
         .card-preview-content::-webkit-scrollbar { width: 4px; }
         .card-preview-content::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }
 
-        /* PORTADA AJUSTADA A 16:10 */
-        .card-cover { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; }
+        /* AJUSTE EXCLUSIVO PARA EL PREVIEW: Evita que la muesca del mockup tape la portada */
+        .card-preview-content .card-cover { 
+            width: 100%; 
+            aspect-ratio: 16/10; 
+            object-fit: cover; 
+            display: block; 
+            margin-top: 25px; 
+        }
         
         /* AVATAR */
         .card-avatar-wrapper {
@@ -225,7 +231,7 @@
         .card-social-grid { display: flex; justify-content: center; gap: 12px; padding: 10px 20px; flex-wrap: wrap; }
         .social-icon-btn {
             width: 45px; height: 45px; background: var(--card-surface);
-            border: 1px solid var(--card-border); border-radius: 50%;
+            border: 1px solid var(--border-color); border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
             color: var(--card-text); font-size: 18px; text-decoration: none;
             transition: transform 0.2s, background 0.2s;
@@ -396,7 +402,6 @@
 
                     <div class="card-contact-section">
                         <a href="#" id="linkPhone" class="contact-item"><i class="fa-solid fa-phone"></i> <span id="textPhone"></span></a>
-                        <a href="#" id="linkWhatsapp" class="contact-item" style="border-color: #25D366; background: rgba(37,211,102,0.05);"><i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> <span>Escríbeme por WhatsApp</span></a>
                         <a href="#" id="linkAddress" class="contact-item"><i class="fa-solid fa-location-dot"></i> <span id="textAddress"></span></a>
                         
                         <!-- MAPA AMPLIADO -->
@@ -435,7 +440,7 @@
         <div class="panel-right">
             <div>
                 <div class="section-title"><span class="material-symbols-rounded">qr_code</span> Configurar QR</div>
-                <div class="form-group"><label>Enlace del QR</label><input type="text" id="inputQrUrl" value="https://dicardpro.com/sarah-jenkins" oninput="updateCard()"></div>
+                <div class="form-group"><label>Enlace del QR (URL de la Tarjeta)</label><input type="text" id="inputQrUrl" value="https://dicardpro.com/sarah-jenkins" oninput="updateCard()"></div>
             </div>
 
             <div>
@@ -561,7 +566,6 @@
 
             document.getElementById('textPhone').innerText = `${ind} ${cel}`;
             document.getElementById('linkPhone').href = `tel:${ind}${cel}`;
-            document.getElementById('linkWhatsapp').href = `https://wa.me/${ind.replace('+','')}${cel}`;
             document.getElementById('textAddress').innerText = address;
             
             if(address.trim() !== "") {
@@ -638,10 +642,13 @@
             } else { footerContainer.style.display = "none"; }
         }
 
-        // CÓDIGO HTML COMPILADO SINCRONIZADO (PORTADA Y VIDEOS EN 16:10 REALES)
+        // CÓDIGO HTML COMPILADO CON METAETIQUETAS DINÁMICAS PARA WHATSAPP / REDES
         function obtenerHTMLConstruido() {
             const currentCardHTML = document.getElementById('cardPreview').innerHTML;
             const title = document.getElementById('inputTitle').value || 'Mi Tarjeta Digital';
+            const subtitle = document.getElementById('inputSubtitle').value || 'Contacto Digital';
+            const avatarImgUrl = document.getElementById('inputAvatar').value || '';
+            const qrUrl = document.getElementById('inputQrUrl').value || window.location.href;
             
             let text = '#FFFFFF';
             let muted = '#94A3B8';
@@ -655,7 +662,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${title} - Tarjeta Digital</title>
+    <title>${title} - ${subtitle}</title>
+
+    <!-- METAETIQUETAS PARA COMPARTIR EN WHATSAPP, FACEBOOK Y REDES (OPEN GRAPH) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="${qrUrl}">
+    <meta property="og:title" content="${title}">
+    <meta property="og:description" content="${subtitle}">
+    <meta property="og:image" content="${avatarImgUrl}">
+    <meta property="og:image:width" content="300">
+    <meta property="og:image:height" content="300">
+
+    <!-- METAS PARA TWITTER / X -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="${title}">
+    <meta name="twitter:description" content="${subtitle}">
+    <meta name="twitter:image" content="${avatarImgUrl}">
+
     <!-- Fuentes e Iconos -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -680,7 +703,7 @@
 
         .qr-code-wrapper img { margin: 0 auto; }
 
-        /* PORTADA CON ASPECT RATIO 16/10 EN HTML EXPORTADO */
+        /* PORTADA ORIGINAL (SIN MARGEN ARRIBA EN EL HTML EXPORTADO) */
         .card-cover { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; }
         
         /* AVATAR */
@@ -843,7 +866,8 @@
         }
 
         function mostrarHTML() {
-            document.getElementById('codeArea').value = obtenerHTMLConstruido();
+            let htmlConstruido = obtenerHTMLConstruido();
+            document.getElementById('codeArea').value = htmlConstruido;
             document.getElementById('codeModal').style.display = "flex";
         }
 
