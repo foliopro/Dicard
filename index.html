@@ -177,7 +177,7 @@
         .card-preview-content::-webkit-scrollbar { width: 4px; }
         .card-preview-content::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }
 
-        /* AJUSTE EXCLUSIVO PARA EL PREVIEW: Evita que la muesca del mockup tape la portada */
+        /* AJUSTE EXCLUSIVO PARA EL PREVIEW */
         .card-preview-content .card-cover { 
             width: 100%; 
             aspect-ratio: 16/10; 
@@ -666,7 +666,7 @@
             } else { footerContainer.style.display = "none"; }
         }
 
-        // CÓDIGO HTML COMPILADO CON METAETIQUETAS DINÁMICAS PARA WHATSAPP / REDES
+        // CÓDIGO HTML COMPILADO CON METAETIQUETAS DINÁMICAS ACTUALIZADAS DESDE LOS INPUTS
         function obtenerHTMLConstruido() {
             const currentCardHTML = document.getElementById('cardPreview').innerHTML;
             const title = document.getElementById('inputTitle').value || 'Mi Tarjeta Digital';
@@ -688,7 +688,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title} - ${subtitle}</title>
 
-    <!-- METAETIQUETAS PARA COMPARTIR EN WHATSAPP, FACEBOOK Y REDES (OPEN GRAPH) -->
+    <!-- METAETIQUETAS DINÁMICAS PARA COMPARTIR EN WHATSAPP, FACEBOOK Y REDES (OPEN GRAPH) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="${qrUrl}">
     <meta property="og:title" content="${title}">
