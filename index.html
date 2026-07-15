@@ -276,6 +276,24 @@
         .modal-close { background: none; border: none; color: var(--text-main); cursor: pointer; font-size: 20px;}
         .modal-body { flex: 1; padding: 20px; }
         .modal-body textarea { width: 100%; height: 100%; background: var(--bg-main); color: #10B981; font-family: monospace; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); resize: none; }
+        
+        /* Grupo de botones en la cabecera del Modal */
+        .modal-header-actions { display: flex; align-items: center; gap: 10px; }
+        .btn-copy-code {
+            background: var(--platform-accent);
+            color: #ffffff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s;
+        }
+        .btn-copy-code:hover { opacity: 0.9; }
 
         @media (max-width: 1024px) {
             body { overflow-y: auto; height: auto; }
@@ -491,7 +509,13 @@
         <div class="modal-box">
             <div class="modal-header">
                 <h3 style="font-size:16px;">💻 Código de tu DiCard</h3>
-                <button class="modal-close" onclick="cerrarModal()"><span class="material-symbols-rounded">close</span></button>
+                <div class="modal-header-actions">
+                    <button class="btn-copy-code" id="btnCopy" onclick="copiarCodigoMemoria()">
+                        <span class="material-symbols-rounded" style="font-size:16px;">content_copy</span>
+                        <span id="btnCopyText">Copiar Código</span>
+                    </button>
+                    <button class="modal-close" onclick="cerrarModal()"><span class="material-symbols-rounded">close</span></button>
+                </div>
             </div>
             <div class="modal-body">
                 <textarea id="codeArea" readonly></textarea>
@@ -868,10 +892,48 @@
         function mostrarHTML() {
             let htmlConstruido = obtenerHTMLConstruido();
             document.getElementById('codeArea').value = htmlConstruido;
+            
+            // Reiniciamos el texto del botón de copiar al abrir el modal
+            document.getElementById('btnCopyText').innerText = "Copiar Código";
             document.getElementById('codeModal').style.display = "flex";
         }
 
         function cerrarModal() { document.getElementById('codeModal').style.display = "none"; }
+
+        function copiarCodigoMemoria() {
+            const codeArea = document.getElementById('codeArea');
+            
+            // Intentar copiar usando la API del portapapeles moderna
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(codeArea.value).then(() => {
+                    marcarCopiadoExitoso();
+                }).catch(err => {
+                    copiarFallback(codeArea);
+                });
+            } else {
+                // Alternativa antigua para navegadores que no soportan Clipboard API
+                copiarFallback(codeArea);
+            }
+        }
+
+        function copiarFallback(element) {
+            element.select();
+            element.setSelectionRange(0, 99999); /* Para móviles */
+            try {
+                document.execCommand('copy');
+                marcarCopiadoExitoso();
+            } catch (err) {
+                alert('No se pudo copiar de manera automática. Por favor selecciona el código manualmente.');
+            }
+        }
+
+        function marcarCopiadoExitoso() {
+            const btnText = document.getElementById('btnCopyText');
+            btnText.innerText = "¡Copiado!";
+            setTimeout(() => {
+                btnText.innerText = "Copiar Código";
+            }, 2000);
+        }
 
         function exportarHTML() {
             const blob = new Blob([obtenerHTMLConstruido()], { type: 'text/html' });
