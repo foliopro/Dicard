@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dicard Pro V3.0 - Platform Builder</title>
+    <!-- Iconos de Google Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0" rel="stylesheet" />
+    <!-- Fuente Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Librería QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        :root {
+            /* Variables de la Plataforma (Dark Mode por defecto) */
+            --bg-main: #0B0F19;
+            --bg-panel: #131B2E;
+            --bg-input: #1E294B;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --platform-accent: #3B82F6; /* Color fijo de la plataforma */
+            
+            /* Variables de la Tarjeta Final (Dinámicas, controladas por la paleta de 3 colores) */
+            --card-bg: #090D16;
+            --card-surface: #1E293B;
+            --card-accent: #6366F1;
+            --card-text: #FFFFFF;
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-muted: #94A3B8;
+        }
+
+        /* TEMA CLARO PARA LA PLATAFORMA */
+        body.light-theme {
+            --bg-main: #E2E8F0;
+            --bg-panel: #FFFFFF;
+            --bg-input: #F8FAFC;
+            --border-color: #CBD5E1;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* BARRA SUPERIOR ORIGINAL */
+        header {
+            height: 65px;
+            background: var(--bg-panel);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .logo-link { text-decoration: none; color: inherit; transition: opacity 0.2s; }
+        .logo-link:hover { opacity: 0.85; }
+
+        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .logo-icon { background: var(--platform-accent); color: white; padding: 6px; border-radius: 8px; }
+        .logo-area h1 { font-size: 16px; font-weight: 700; }
+
+        .action-bar { display: flex; align-items: center; gap: 10px; }
+        
+        .btn-action {
+            background: var(--bg-input);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .btn-action:hover { border-color: var(--platform-accent); }
+
+        .btn-theme { font-size: 16px; padding: 8px 12px; }
+
+        .btn-accent-action { background: var(--platform-accent); color: white; border: none; }
+        .btn-accent-action:hover { opacity: 0.9; }
+
+        /* WORKSPACE */
+        .workspace { display: flex; flex: 1; height: calc(100vh - 65px); overflow: hidden; }
+
+        .panel-left, .panel-right {
+            width: 22%;
+            background-color: var(--bg-panel);
+            border-right: 1px solid var(--border-color);
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .panel-right { border-right: none; border-left: 1px solid var(--border-color); }
+
+        .canvas-area {
+            flex: 1;
+            background: var(--bg-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* FORMULARIOS */
+        .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--platform-accent); font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+        .form-group input, .form-group textarea {
+            width: 100%; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; color: var(--text-main); font-size: 13px; transition: border 0.2s;
+        }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--platform-accent); }
+
+        /* PALETAS */
+        .color-palette-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+        .palette-row {
+            display: flex; align-items: center; gap: 10px; padding: 8px;
+            background: var(--bg-input); border: 1px solid var(--border-color);
+            border-radius: 8px; cursor: pointer; transition: all 0.2s;
+        }
+        .palette-row:hover { border-color: var(--platform-accent); }
+        .palette-row.active { border-color: var(--platform-accent); box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3); }
+        .palette-preview { display: flex; gap: 4px; }
+        .palette-color { width: 18px; height: 18px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); }
+        .palette-name { font-size: 11px; font-weight: 600; color: var(--text-main); }
+
+        /* SIMULADOR CELULAR */
+        .phone-mockup {
+            width: 380px; height: 780px;
+            background: #111; border: 12px solid #222;
+            border-radius: 45px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+            overflow: hidden; position: relative; display: flex; flex-direction: column;
+        }
+        .phone-notch { width: 110px; height: 25px; background: black; position: absolute; top: 0; left: 50%; transform: translateX(-50%); border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; z-index: 100; }
+
+        /* PREVIEW DE LA TARJETA */
+        .card-preview-content {
+            flex: 1;
+            background: var(--card-bg);
+            color: var(--card-text);
+            overflow-y: auto;
+            position: relative;
+            transition: background 0.3s, color 0.3s;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .card-preview-content::-webkit-scrollbar { width: 4px; }
+        .card-preview-content::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }
+
+        /* PORTADA AJUSTADA A 16:10 */
+        .card-cover { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; }
+        
+        /* AVATAR */
+        .card-avatar-wrapper {
+            width: 170px;
+            height: 170px;
+            margin: -85px auto 0 auto;
+            position: relative;
+            z-index: 5;
+            border-radius: 50%;
+            padding: 5px;
+            background: var(--card-bg);
+            transition: background 0.3s;
+        }
+        .card-avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+            border: 2px solid var(--card-border);
+        }
+
+        /* TEXTOS DE IDENTIDAD */
+        .card-identity { text-align: center; padding: 20px 20px 10px 20px; }
+        .card-title { font-size: 24px; font-weight: 800; margin-bottom: 4px; text-align: center; }
+        .card-subtitle { font-size: 14px; color: var(--card-accent); font-weight: 700; margin-bottom: 12px; text-align: center; }
+        .card-description { font-size: 13px; color: var(--card-muted); line-height: 1.6; text-align: center; }
+
+        /* GALERÍA CON MEDIA Y VIDEOS EN 16:10 */
+        .card-gallery { padding: 0 20px; display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .card-gallery img { width: 100%; height: auto; border-radius: 12px; display: block; }
+        .card-gallery video { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: 12px; display: block; }
+
+        .card-contact-section { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .contact-item {
+            display: flex; align-items: center; gap: 12px;
+            background: var(--card-surface); padding: 14px;
+            border-radius: 12px; text-decoration: none;
+            color: var(--card-text); font-size: 13px;
+            border: 1px solid var(--card-border);
+        }
+        .contact-item i { font-size: 16px; color: var(--card-accent); width: 20px; text-align: center; }
+
+        .card-social-grid { display: flex; justify-content: center; gap: 12px; padding: 10px 20px; flex-wrap: wrap; }
+        .social-icon-btn {
+            width: 45px; height: 45px; background: var(--card-surface);
+            border: 1px solid var(--card-border); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            color: var(--card-text); font-size: 18px; text-decoration: none;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .social-icon-btn:hover { transform: translateY(-3px); background: var(--card-accent); color: #fff; border-color: var(--card-accent);}
+
+        .qr-section {
+            display: flex; flex-direction: column; align-items: center; padding: 20px;
+            background: var(--card-surface); margin: 10px 20px;
+            border-radius: 14px; border: 1px solid var(--card-border);
+        }
+        .qr-title { font-size: 12px; text-transform: uppercase; color: var(--card-muted); margin-bottom: 12px; font-weight: 700; letter-spacing: 0.5px; }
+        .qr-code-wrapper { background: white; padding: 12px; border-radius: 10px; display: inline-block; }
+
+        .card-testimonials { padding: 20px; }
+        .block-title { font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--card-muted); margin-bottom: 12px; font-weight: 700; text-align: center;}
+        .testimonial-item { background: var(--card-surface); border: 1px solid var(--card-border); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+        .testimonial-name { font-size: 14px; font-weight: 700; color: var(--card-accent); margin-bottom: 6px; }
+        .testimonial-text { font-size: 13px; color: var(--card-text); line-height: 1.5; font-style: italic; }
+
+        .card-ctas { padding: 0 20px 20px 20px; display: flex; flex-direction: column; gap: 12px; }
+        .cta-button {
+            width: 100%; background: var(--card-accent); color: #ffffff;
+            padding: 16px; border-radius: 12px; text-align: center;
+            text-decoration: none; font-weight: 700; font-size: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.2s;
+        }
+        .cta-button:hover { transform: scale(1.02); }
+
+        .distributor-card-footer { padding: 20px; border-top: 1px solid var(--card-border); text-align: center; background: var(--card-surface); }
+        .distributor-card-footer p { font-size: 12px; color: var(--card-text); margin-bottom: 8px; font-weight: 600;}
+        .distributor-card-footer a { font-size: 12px; color: var(--card-accent); text-decoration: none; font-weight: 700; }
+
+        .dicard-brand-footer { padding: 20px; text-align: center; font-size: 12px; }
+        .dicard-brand-footer a { color: var(--card-muted); text-decoration: none; }
+        .dicard-brand-footer a span { color: var(--card-accent); font-weight: 700; }
+
+        /* MODAL */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-box { background: var(--bg-panel); width: 70%; height: 70%; border-radius: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; overflow: hidden; }
+        .modal-header { padding: 15px 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .modal-close { background: none; border: none; color: var(--text-main); cursor: pointer; font-size: 20px;}
+        .modal-body { flex: 1; padding: 20px; }
+        .modal-body textarea { width: 100%; height: 100%; background: var(--bg-main); color: #10B981; font-family: monospace; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); resize: none; }
+
+        @media (max-width: 1024px) {
+            body { overflow-y: auto; height: auto; }
+            .workspace { flex-direction: column; height: auto; }
+            .panel-left, .panel-right { width: 100%; height: auto; overflow: visible; }
+            .canvas-area { width: 100%; padding: 20px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo-link">
+            <div class="logo-area">
+                <span class="material-symbols-rounded logo-icon">layers</span>
+                <h1>Dicard Pro V 3.0</h1>
+            </div>
+        </a>
+
+        <div class="action-bar">
+            <button class="btn-action btn-theme" onclick="toggleTheme()" title="Cambiar Tema de Plataforma">☀️/🌙</button>
+            <button class="btn-action" onclick="nuevaDicard()"><span class="material-symbols-rounded">add_circle</span>Nueva</button>
+            <button class="btn-action" onclick="guardarJson()"><span class="material-symbols-rounded">save</span>Guardar</button>
+            <button class="btn-action" onclick="document.getElementById('fileInput').click();"><span class="material-symbols-rounded">upload_file</span>Cargar</button>
+            <input type="file" id="fileInput" style="display: none;" accept=".json" onchange="cargarJson(event)">
+            
+            <button class="btn-action" onclick="mostrarHTML()"><span class="material-symbols-rounded">code</span>Código</button>
+            <button class="btn-action btn-accent-action" onclick="exportarHTML()"><span class="material-symbols-rounded">download</span>Exportar HTML</button>
+        </div>
+    </header>
+
+    <div class="workspace">
+        
+        <!-- PANEL IZQUIERDO -->
+        <div class="panel-left">
+            <div>
+                <div class="section-title"><span class="material-symbols-rounded">palette</span> Paleta de la Tarjeta (3 Colores)</div>
+                <div class="color-palette-container">
+                    <div class="palette-row active" onclick="set3ColorPalette('#090D16', '#1E293B', '#6366F1', this)">
+                        <div class="palette-preview">
+                            <div class="palette-color" style="background: #090D16;"></div>
+                            <div class="palette-color" style="background: #1E293B;"></div>
+                            <div class="palette-color" style="background: #6366F1;"></div>
+                        </div>
+                        <span class="palette-name">Cyber Indigo</span>
+                    </div>
+                    <div class="palette-row" onclick="set3ColorPalette('#061F12', '#0E3A24', '#10B981', this)">
+                        <div class="palette-preview">
+                            <div class="palette-color" style="background: #061F12;"></div>
+                            <div class="palette-color" style="background: #0E3A24;"></div>
+                            <div class="palette-color" style="background: #10B981;"></div>
+                        </div>
+                        <span class="palette-name">Esmeralda</span>
+                    </div>
+                    <div class="palette-row" onclick="set3ColorPalette('#FFFFFF', '#F1F5F9', '#0F172A', this)">
+                        <div class="palette-preview">
+                            <div class="palette-color" style="background: #FFFFFF;"></div>
+                            <div class="palette-color" style="background: #F1F5F9;"></div>
+                            <div class="palette-color" style="background: #0F172A;"></div>
+                        </div>
+                        <span class="palette-name">Light Minimal</span>
+                    </div>
+                    <div class="palette-row" onclick="set3ColorPalette('#1C0D02', '#3D1C02', '#F97316', this)">
+                        <div class="palette-preview">
+                            <div class="palette-color" style="background: #1C0D02;"></div>
+                            <div class="palette-color" style="background: #3D1C02;"></div>
+                            <div class="palette-color" style="background: #F97316;"></div>
+                        </div>
+                        <span class="palette-name">Sunset</span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="section-title"><span class="material-symbols-rounded">image</span> Identidad Visual</div>
+                <div class="form-group">
+                    <label>URL Imagen Portada</label>
+                    <input type="text" id="inputCover" value="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500" oninput="updateCard()">
+                </div>
+                <div class="form-group">
+                    <label>URL Avatar Logo (Proporción Circular)</label>
+                    <input type="text" id="inputAvatar" value="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" oninput="updateCard()">
+                </div>
+            </div>
+
+            <div>
+                <div class="section-title"><span class="material-symbols-rounded">person</span> Textos Principales</div>
+                <div class="form-group"><label>Título</label><input type="text" id="inputTitle" value="Sarah Jenkins" oninput="updateCard()"></div>
+                <div class="form-group"><label>Subtítulo</label><input type="text" id="inputSubtitle" value="Diseñadora UX / UI & Creadora" oninput="updateCard()"></div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="inputDescription" rows="3" oninput="updateCard()">Ayudo a marcas modernas a diseñar plataformas digitales SaaS que convierten y escalan mensualmente.</textarea>
+                </div>
+            </div>
+
+            <div>
+                <div class="section-title"><span class="material-symbols-rounded">view_carousel</span> Galería</div>
+                <div class="form-group">
+                    <label>URLs (Imágenes o MP4 - Una por línea)</label>
+                    <textarea id="inputLandingImages" rows="4" oninput="updateCard()">https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- CANVAS -->
+        <div class="canvas-area">
+            <div class="phone-mockup">
+                <div class="phone-notch"></div>
+                
+                <div class="card-preview-content" id="cardPreview">
+                    <img id="cardCoverImg" class="card-cover" src="" alt="Portada">
+                    
+                    <div class="card-avatar-wrapper">
+                        <img id="cardAvatarImg" class="card-avatar" src="" alt="Logo">
+                    </div>
+
+                    <div class="card-identity">
+                        <div class="card-title" id="cardTitleText"></div>
+                        <div class="card-subtitle" id="cardSubtitleText"></div>
+                        <div class="card-description" id="cardDescriptionText"></div>
+                    </div>
+
+                    <div class="card-gallery" id="cardGalleryContainer"></div>
+
+                    <div class="card-contact-section">
+                        <a href="#" id="linkPhone" class="contact-item"><i class="fa-solid fa-phone"></i> <span id="textPhone"></span></a>
+                        <a href="#" id="linkWhatsapp" class="contact-item" style="border-color: #25D366; background: rgba(37,211,102,0.05);"><i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> <span>Escríbeme por WhatsApp</span></a>
+                        <a href="#" id="linkAddress" class="contact-item"><i class="fa-solid fa-location-dot"></i> <span id="textAddress"></span></a>
+                        
+                        <!-- MAPA AMPLIADO -->
+                        <div id="mapContainer" style="margin-top: 10px; border-radius: 12px; overflow: hidden; height: 260px; background: var(--card-surface); border: 1px solid var(--card-border);">
+                            <iframe id="cardMapIframe" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="card-social-grid" id="cardSocialsContainer"></div>
+
+                    <div class="qr-section">
+                        <div class="qr-title">Escanear para Compartir</div>
+                        <div class="qr-code-wrapper" id="qrContainer"></div>
+                    </div>
+
+                    <div class="card-testimonials" id="cardTestimonialsContainer"></div>
+
+                    <div class="card-ctas" id="cardCtasContainer"></div>
+
+                    <div class="distributor-card-footer" id="cardDistributorLocalFooter">
+                        <p id="distLocalText"></p>
+                        <a id="distLocalLink" href="#" target="_blank"></a>
+                    </div>
+
+                    <div class="dicard-brand-footer">
+                        <a href="https://wa.me/573117715353?text=Hola%20quiero%20ser%20distribuidor" target="_blank">
+                            Creado por <span>Dicard Pro V 3.0</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL DERECHO -->
+        <div class="panel-right">
+            <div>
+                <div class="section-title"><span class="material-symbols-rounded">qr_code</span> Configurar QR</div>
+                <div class="form-group"><label>Enlace del QR</label><input type="text" id="inputQrUrl" value="https://dicardpro.com/sarah-jenkins" oninput="updateCard()"></div>
+            </div>
+
+            <div>
+                <div class="section-title"><span class="material-symbols-rounded">call</span> Datos de Contacto</div>
+                <div class="form-group"><label>Dirección y Ciudad</label><input type="text" id="inputAddress" value="Plaza Botero, Medellín" oninput="updateCard()"></div>
+                <div class="form-row" style="display:flex; gap:10px;">
+                    <div class="form-group" style="width: 35%;"><label>Ind</label><input type="text" id="inputInd" value="+57" oninput="updateCard()"></div>
+                    <div class="form-group" style="width: 65%;"><label>Celular</label><input type="text" id="inputCel" value="3001234567" oninput="updateCard()"></div>
+                </div>
+            </div>
+
+            <div>
+                <div class="section-title"><span class="material-symbols-rounded">share</span> Redes Sociales</div>
+                <div class="form-group"><label>Instagram</label><input type="text" id="netInsta" value="https://instagram.com" oninput="updateCard()"></div>
+                <div class="form-group"><label>Facebook</label><input type="text" id="netFace" value="https://facebook.com" oninput="updateCard()"></div>
+                <div class="form-group"><label>TikTok</label><input type="text" id="netTikTok" value="" oninput="updateCard()"></div>
+                <div class="form-group"><label>LinkedIn</label><input type="text" id="netLinkedin" value="https://linkedin.com" oninput="updateCard()"></div>
+                <div class="form-group"><label>Google Maps</label><input type="text" id="netGoogle" value="https://maps.google.com" oninput="updateCard()"></div>
+            </div>
+
+            <div>
+                <div class="section-title"><span class="material-symbols-rounded">badge</span> Distribuidor Local</div>
+                <div class="form-group"><label>Nombre</label><input type="text" id="inputDistName" value="Juan Pérez" oninput="updateCard()"></div>
+                <div class="form-group"><label>WhatsApp (+Ind y No)</label><input type="text" id="inputDistWhatsapp" value="573009999999" oninput="updateCard()"></div>
+            </div>
+
+            <div>
+                <div class="section-title"><span class="material-symbols-rounded">chat</span> Testimonios</div>
+                <div class="form-group">
+                    <label>Formato: Nombre|Descripcion</label>
+                    <textarea id="inputTestimonials" rows="3" oninput="updateCard()">Carlos M.|Excelente servicio, mi tarjeta quedó lista en minutos.</textarea>
+                </div>
+            </div>
+
+            <div>
+                <div class="section-title"><span class="material-symbols-rounded">ads_click</span> Botones de Acción (CTA)</div>
+                <div class="form-group">
+                    <label>Formato: Botón|Url</label>
+                    <textarea id="inputCtas" rows="3" oninput="updateCard()">Descargar Catálogo 2026|https://google.com</textarea>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL DE CÓDIGO -->
+    <div class="modal-overlay" id="codeModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 style="font-size:16px;">💻 Código de tu DiCard</h3>
+                <button class="modal-close" onclick="cerrarModal()"><span class="material-symbols-rounded">close</span></button>
+            </div>
+            <div class="modal-body">
+                <textarea id="codeArea" readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentBg = '#090D16';
+        let currentSurface = '#1E293B';
+        let currentAccent = '#6366F1';
+        let qrcodeInstance = null;
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+        }
+
+        function set3ColorPalette(bg, surface, accent, element) {
+            currentBg = bg;
+            currentSurface = surface;
+            currentAccent = accent;
+
+            let text = '#FFFFFF';
+            let muted = '#94A3B8';
+            if (bg === '#FFFFFF') {
+                text = '#0F172A';
+                muted = '#475569';
+            }
+
+            document.documentElement.style.setProperty('--card-bg', bg);
+            document.documentElement.style.setProperty('--card-surface', surface);
+            document.documentElement.style.setProperty('--card-accent', accent);
+            document.documentElement.style.setProperty('--card-text', text);
+            document.documentElement.style.setProperty('--card-muted', muted);
+
+            document.querySelectorAll('.palette-row').forEach(b => b.classList.remove('active'));
+            if (element) {
+                element.classList.add('active');
+            }
+            updateCard();
+        }
+
+        function updateCard() {
+            document.getElementById('cardCoverImg').src = document.getElementById('inputCover').value;
+            document.getElementById('cardAvatarImg').src = document.getElementById('inputAvatar').value;
+            
+            document.getElementById('cardTitleText').innerText = document.getElementById('inputTitle').value;
+            document.getElementById('cardSubtitleText').innerText = document.getElementById('inputSubtitle').value;
+            document.getElementById('cardDescriptionText').innerText = document.getElementById('inputDescription').value;
+
+            // Galería
+            const galleryContainer = document.getElementById('cardGalleryContainer');
+            galleryContainer.innerHTML = '';
+            const lines = document.getElementById('inputLandingImages').value.split('\n');
+            lines.forEach(url => {
+                let cleanUrl = url.trim();
+                if(cleanUrl !== "") {
+                    if(cleanUrl.endsWith('.mp4') || cleanUrl.includes('video')) {
+                        let video = document.createElement('video'); video.src = cleanUrl; video.controls = true; video.muted = true;
+                        galleryContainer.appendChild(video);
+                    } else {
+                        let img = document.createElement('img'); img.src = cleanUrl;
+                        galleryContainer.appendChild(img);
+                    }
+                }
+            });
+
+            // Contacto y Mapa
+            const ind = document.getElementById('inputInd').value;
+            const cel = document.getElementById('inputCel').value;
+            const address = document.getElementById('inputAddress').value;
+
+            document.getElementById('textPhone').innerText = `${ind} ${cel}`;
+            document.getElementById('linkPhone').href = `tel:${ind}${cel}`;
+            document.getElementById('linkWhatsapp').href = `https://wa.me/${ind.replace('+','')}${cel}`;
+            document.getElementById('textAddress').innerText = address;
+            
+            if(address.trim() !== "") {
+                document.getElementById('mapContainer').style.display = "block";
+                document.getElementById('cardMapIframe').src = `https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=14&ie=UTF8&iwloc=&output=embed`;
+            } else {
+                document.getElementById('mapContainer').style.display = "none";
+            }
+
+            // Redes Sociales
+            const socialsContainer = document.getElementById('cardSocialsContainer');
+            socialsContainer.innerHTML = '';
+            const networks = [
+                { id: 'netInsta', icon: 'fa-brands fa-instagram' }, { id: 'netFace', icon: 'fa-brands fa-facebook-f' },
+                { id: 'netTikTok', icon: 'fa-brands fa-tiktok' }, { id: 'netLinkedin', icon: 'fa-brands fa-linkedin-in' },
+                { id: 'netGoogle', icon: 'fa-brands fa-google' }
+            ];
+            networks.forEach(net => {
+                let val = document.getElementById(net.id).value.trim();
+                if(val !== "") {
+                    let a = document.createElement('a'); a.href = val; a.target = "_blank"; a.className = "social-icon-btn";
+                    a.innerHTML = `<i class="${net.icon}"></i>`; socialsContainer.appendChild(a);
+                }
+            });
+
+            // QR
+            const qrUrl = document.getElementById('inputQrUrl').value.trim();
+            const qrContainer = document.getElementById('qrContainer');
+            qrContainer.innerHTML = '';
+            if (qrUrl !== "") {
+                qrcodeInstance = new QRCode(qrContainer, { text: qrUrl, width: 140, height: 140, colorDark: "#000000", colorLight: "#ffffff" });
+            }
+
+            // Testimonios
+            const testimonialsContainer = document.getElementById('cardTestimonialsContainer');
+            testimonialsContainer.innerHTML = '';
+            const tLines = document.getElementById('inputTestimonials').value.split('\n');
+            if(tLines.length > 0 && tLines[0].trim() !== "") {
+                let title = document.createElement('div'); title.className = "block-title"; title.innerText = "Testimonios";
+                testimonialsContainer.appendChild(title);
+                tLines.forEach(line => {
+                    let parts = line.split('|');
+                    if(parts.length >= 2) {
+                        let item = document.createElement('div'); item.className = "testimonial-item";
+                        item.innerHTML = `<div class="testimonial-name">${parts[0].trim()}</div><div class="testimonial-text">"${parts[1].trim()}"</div>`;
+                        testimonialsContainer.appendChild(item);
+                    }
+                });
+            }
+
+            // CTAs
+            const ctasContainer = document.getElementById('cardCtasContainer');
+            ctasContainer.innerHTML = '';
+            const ctaLines = document.getElementById('inputCtas').value.split('\n');
+            ctaLines.forEach(line => {
+                let parts = line.split('|');
+                if(parts.length >= 2) {
+                    let a = document.createElement('a'); a.className = "cta-button";
+                    a.href = parts[1].trim(); a.target = "_blank"; a.innerText = parts[0].trim();
+                    ctasContainer.appendChild(a);
+                }
+            });
+
+            // Distribuidor
+            const distName = document.getElementById('inputDistName').value.trim();
+            const distWpp = document.getElementById('inputDistWhatsapp').value.trim();
+            const footerContainer = document.getElementById('cardDistributorLocalFooter');
+            if (distName !== "" && distWpp !== "") {
+                footerContainer.style.display = "block";
+                document.getElementById('distLocalText').innerText = `¿Quieres tu propia Tarjeta Digital? ¡Escríbeme!`;
+                const distLink = document.getElementById('distLocalLink');
+                distLink.innerText = `Distribuidor: ${distName}`;
+                distLink.href = `https://wa.me/${distWpp}?text=Hola,%20quiero%20mi%20Dicard.`;
+            } else { footerContainer.style.display = "none"; }
+        }
+
+        // CÓDIGO HTML COMPILADO SINCRONIZADO (PORTADA Y VIDEOS EN 16:10 REALES)
+        function obtenerHTMLConstruido() {
+            const currentCardHTML = document.getElementById('cardPreview').innerHTML;
+            const title = document.getElementById('inputTitle').value || 'Mi Tarjeta Digital';
+            
+            let text = '#FFFFFF';
+            let muted = '#94A3B8';
+            if (currentBg === '#FFFFFF') {
+                text = '#0F172A';
+                muted = '#475569';
+            }
+
+            return `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title} - Tarjeta Digital</title>
+    <!-- Fuentes e Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --card-bg: ${currentBg};
+            --card-surface: ${currentSurface};
+            --card-accent: ${currentAccent};
+            --card-text: ${text};
+            --card-muted: ${muted};
+            --card-border: rgba(255, 255, 255, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+        
+        body { background-color: ${currentBg === '#FFFFFF' ? '#F8FAFC' : '#0B0F19'}; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
+        
+        .container-responsive {
+            width: 100%; max-width: 450px; background: var(--card-bg); color: var(--card-text);
+            min-height: 100vh; box-shadow: 0 0 30px rgba(0,0,0,0.2); position: relative; display: flex; flex-direction: column;
+        }
+
+        .qr-code-wrapper img { margin: 0 auto; }
+
+        /* PORTADA CON ASPECT RATIO 16/10 EN HTML EXPORTADO */
+        .card-cover { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; }
+        
+        /* AVATAR */
+        .card-avatar-wrapper {
+            width: 170px; height: 170px; margin: -85px auto 0 auto;
+            position: relative; z-index: 5; border-radius: 50%;
+            padding: 5px; background: var(--card-bg);
+        }
+        .card-avatar { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; border: 2px solid var(--card-border); }
+
+        /* TEXTOS DE IDENTIDAD CENTRADOS */
+        .card-identity { text-align: center; padding: 20px 20px 10px 20px; }
+        .card-title { font-size: 24px; font-weight: 800; margin-bottom: 4px; text-align: center; }
+        .card-subtitle { font-size: 14px; color: var(--card-accent); font-weight: 700; margin-bottom: 12px; text-align: center; }
+        .card-description { font-size: 13px; color: var(--card-muted); line-height: 1.6; text-align: center; }
+
+        /* GALERÍA CON MEDIA Y VIDEOS EN 16:10 */
+        .card-gallery { padding: 0 20px; display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .card-gallery img { width: 100%; height: auto; border-radius: 12px; display: block; }
+        .card-gallery video { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: 12px; display: block; }
+
+        .card-contact-section { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .contact-item {
+            display: flex; align-items: center; gap: 12px;
+            background: var(--card-surface); padding: 14px;
+            border-radius: 12px; text-decoration: none; color: var(--card-text);
+            font-size: 13px; border: 1px solid var(--card-border);
+        }
+        .contact-item i { font-size: 16px; color: var(--card-accent); width: 20px; text-align: center; }
+
+        .card-social-grid { display: flex; justify-content: center; gap: 12px; padding: 10px 20px; flex-wrap: wrap; }
+        .social-icon-btn {
+            width: 45px; height: 45px; background: var(--card-surface);
+            border: 1px solid var(--card-border); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            color: var(--card-text); font-size: 18px; text-decoration: none;
+        }
+
+        .qr-section {
+            display: flex; flex-direction: column; align-items: center; padding: 20px;
+            background: var(--card-surface); margin: 10px 20px;
+            border-radius: 14px; border: 1px solid var(--card-border);
+        }
+        .qr-title { font-size: 12px; text-transform: uppercase; color: var(--card-muted); margin-bottom: 12px; font-weight: 700; letter-spacing: 0.5px; }
+        .qr-code-wrapper { background: white; padding: 12px; border-radius: 10px; display: inline-block; }
+
+        .card-testimonials { padding: 20px; }
+        .block-title { font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--card-muted); margin-bottom: 12px; font-weight: 700; text-align: center;}
+        .testimonial-item { background: var(--card-surface); border: 1px solid var(--card-border); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+        .testimonial-name { font-size: 14px; font-weight: 700; color: var(--card-accent); margin-bottom: 6px; }
+        .testimonial-text { font-size: 13px; color: var(--card-text); line-height: 1.5; font-style: italic; }
+
+        .card-ctas { padding: 0 20px 20px 20px; display: flex; flex-direction: column; gap: 12px; }
+        .cta-button {
+            width: 100%; background: var(--card-accent); color: #ffffff;
+            padding: 16px; border-radius: 12px; text-align: center;
+            text-decoration: none; font-weight: 700; font-size: 14px; display: block;
+        }
+
+        .distributor-card-footer { padding: 20px; border-top: 1px solid var(--card-border); text-align: center; background: var(--card-surface); }
+        .distributor-card-footer p { font-size: 12px; color: var(--card-text); margin-bottom: 8px; font-weight: 600;}
+        .distributor-card-footer a { font-size: 12px; color: var(--card-accent); text-decoration: none; font-weight: 700; }
+
+        .dicard-brand-footer { padding: 20px; text-align: center; font-size: 12px; }
+        .dicard-brand-footer a { color: var(--card-muted); text-decoration: none; }
+        .dicard-brand-footer a span { color: var(--card-accent); font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="container-responsive">
+        ${currentCardHTML}
+    </div>
+</body>
+</html>`;
+        }
+
+        function nuevaDicard() {
+            if(confirm("¿Estás seguro de que quieres limpiar todos los campos?")) {
+                document.querySelectorAll('input[type="text"], textarea').forEach(el => el.value = '');
+                updateCard();
+            }
+        }
+
+        function guardarJson() {
+            const data = {
+                colorBg: currentBg,
+                colorSurface: currentSurface,
+                colorAccent: currentAccent,
+                isLightMode: document.body.classList.contains('light-theme'),
+                cover: document.getElementById('inputCover').value,
+                avatar: document.getElementById('inputAvatar').value,
+                title: document.getElementById('inputTitle').value,
+                subtitle: document.getElementById('inputSubtitle').value,
+                description: document.getElementById('inputDescription').value,
+                landingImages: document.getElementById('inputLandingImages').value,
+                qrUrl: document.getElementById('inputQrUrl').value,
+                address: document.getElementById('inputAddress').value,
+                ind: document.getElementById('inputInd').value,
+                cel: document.getElementById('inputCel').value,
+                distName: document.getElementById('inputDistName').value,
+                distWpp: document.getElementById('inputDistWhatsapp').value,
+                testimonials: document.getElementById('inputTestimonials').value,
+                ctas: document.getElementById('inputCtas').value,
+                redes: {
+                    insta: document.getElementById('netInsta').value,
+                    face: document.getElementById('netFace').value,
+                    tiktok: document.getElementById('netTikTok').value,
+                    linkedin: document.getElementById('netLinkedin').value,
+                    google: document.getElementById('netGoogle').value
+                }
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+            a.download = `dicard-${data.title || 'export'}.json`; a.click();
+        }
+
+        function cargarJson(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = JSON.parse(e.target.result);
+                
+                document.getElementById('inputCover').value = data.cover || '';
+                document.getElementById('inputAvatar').value = data.avatar || '';
+                document.getElementById('inputTitle').value = data.title || '';
+                document.getElementById('inputSubtitle').value = data.subtitle || '';
+                document.getElementById('inputDescription').value = data.description || '';
+                document.getElementById('inputLandingImages').value = data.landingImages || '';
+                document.getElementById('inputQrUrl').value = data.qrUrl || '';
+                document.getElementById('inputAddress').value = data.address || '';
+                document.getElementById('inputInd').value = data.ind || '';
+                document.getElementById('inputCel').value = data.cel || '';
+                document.getElementById('inputDistName').value = data.distName || '';
+                document.getElementById('inputDistWhatsapp').value = data.distWpp || '';
+                document.getElementById('inputTestimonials').value = data.testimonials || '';
+                document.getElementById('inputCtas').value = data.ctas || '';
+                
+                if(data.redes) {
+                    document.getElementById('netInsta').value = data.redes.insta || '';
+                    document.getElementById('netFace').value = data.redes.face || '';
+                    document.getElementById('netTikTok').value = data.redes.tiktok || '';
+                    document.getElementById('netLinkedin').value = data.redes.linkedin || '';
+                    document.getElementById('netGoogle').value = data.redes.google || '';
+                }
+
+                if(data.colorBg && data.colorSurface && data.colorAccent) {
+                    set3ColorPalette(data.colorBg, data.colorSurface, data.colorAccent, null);
+                }
+
+                if(data.isLightMode) {
+                    document.body.classList.add('light-theme');
+                } else {
+                    document.body.classList.remove('light-theme');
+                }
+
+                updateCard();
+            };
+            reader.readAsText(file);
+        }
+
+        function mostrarHTML() {
+            document.getElementById('codeArea').value = obtenerHTMLConstruido();
+            document.getElementById('codeModal').style.display = "flex";
+        }
+
+        function cerrarModal() { document.getElementById('codeModal').style.display = "none"; }
+
+        function exportarHTML() {
+            const blob = new Blob([obtenerHTMLConstruido()], { type: 'text/html' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+            a.download = `${document.getElementById('inputTitle').value || 'tarjeta'}-dicard.html`; a.click();
+        }
+
+        window.onload = updateCard;
+    </script>
+</body>
+</html>
