@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarah Jenkins - Tarjeta Digital</title>
+    <!-- Fuentes e Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --card-bg: #090D16;
+            --card-surface: #1E293B;
+            --card-accent: #6366F1;
+            --card-text: #FFFFFF;
+            --card-muted: #94A3B8;
+            --card-border: rgba(255, 255, 255, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+        
+        body { background-color: #0B0F19; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
+        
+        .container-responsive {
+            width: 100%; max-width: 450px; background: var(--card-bg); color: var(--card-text);
+            min-height: 100vh; box-shadow: 0 0 30px rgba(0,0,0,0.2); position: relative; display: flex; flex-direction: column;
+        }
+
+        .qr-code-wrapper img { margin: 0 auto; }
+
+        /* PORTADA CON ASPECT RATIO 16/10 EN HTML EXPORTADO */
+        .card-cover { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; }
+        
+        /* AVATAR */
+        .card-avatar-wrapper {
+            width: 170px; height: 170px; margin: -85px auto 0 auto;
+            position: relative; z-index: 5; border-radius: 50%;
+            padding: 5px; background: var(--card-bg);
+        }
+        .card-avatar { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; border: 2px solid var(--card-border); }
+
+        /* TEXTOS DE IDENTIDAD CENTRADOS */
+        .card-identity { text-align: center; padding: 20px 20px 10px 20px; }
+        .card-title { font-size: 24px; font-weight: 800; margin-bottom: 4px; text-align: center; }
+        .card-subtitle { font-size: 14px; color: var(--card-accent); font-weight: 700; margin-bottom: 12px; text-align: center; }
+        .card-description { font-size: 13px; color: var(--card-muted); line-height: 1.6; text-align: center; }
+
+        /* GALERÍA CON MEDIA Y VIDEOS EN 16:10 */
+        .card-gallery { padding: 0 20px; display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .card-gallery img { width: 100%; height: auto; border-radius: 12px; display: block; }
+        .card-gallery video { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: 12px; display: block; }
+
+        .card-contact-section { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .contact-item {
+            display: flex; align-items: center; gap: 12px;
+            background: var(--card-surface); padding: 14px;
+            border-radius: 12px; text-decoration: none; color: var(--card-text);
+            font-size: 13px; border: 1px solid var(--card-border);
+        }
+        .contact-item i { font-size: 16px; color: var(--card-accent); width: 20px; text-align: center; }
+
+        .card-social-grid { display: flex; justify-content: center; gap: 12px; padding: 10px 20px; flex-wrap: wrap; }
+        .social-icon-btn {
+            width: 45px; height: 45px; background: var(--card-surface);
+            border: 1px solid var(--card-border); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            color: var(--card-text); font-size: 18px; text-decoration: none;
+        }
+
+        .qr-section {
+            display: flex; flex-direction: column; align-items: center; padding: 20px;
+            background: var(--card-surface); margin: 10px 20px;
+            border-radius: 14px; border: 1px solid var(--card-border);
+        }
+        .qr-title { font-size: 12px; text-transform: uppercase; color: var(--card-muted); margin-bottom: 12px; font-weight: 700; letter-spacing: 0.5px; }
+        .qr-code-wrapper { background: white; padding: 12px; border-radius: 10px; display: inline-block; }
+
+        .card-testimonials { padding: 20px; }
+        .block-title { font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--card-muted); margin-bottom: 12px; font-weight: 700; text-align: center;}
+        .testimonial-item { background: var(--card-surface); border: 1px solid var(--card-border); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+        .testimonial-name { font-size: 14px; font-weight: 700; color: var(--card-accent); margin-bottom: 6px; }
+        .testimonial-text { font-size: 13px; color: var(--card-text); line-height: 1.5; font-style: italic; }
+
+        .card-ctas { padding: 0 20px 20px 20px; display: flex; flex-direction: column; gap: 12px; }
+        .cta-button {
+            width: 100%; background: var(--card-accent); color: #ffffff;
+            padding: 16px; border-radius: 12px; text-align: center;
+            text-decoration: none; font-weight: 700; font-size: 14px; display: block;
+        }
+
+        .distributor-card-footer { padding: 20px; border-top: 1px solid var(--card-border); text-align: center; background: var(--card-surface); }
+        .distributor-card-footer p { font-size: 12px; color: var(--card-text); margin-bottom: 8px; font-weight: 600;}
+        .distributor-card-footer a { font-size: 12px; color: var(--card-accent); text-decoration: none; font-weight: 700; }
+
+        .dicard-brand-footer { padding: 20px; text-align: center; font-size: 12px; }
+        .dicard-brand-footer a { color: var(--card-muted); text-decoration: none; }
+        .dicard-brand-footer a span { color: var(--card-accent); font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="container-responsive">
+        
+                    <img id="cardCoverImg" class="card-cover" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500" alt="Portada">
+                    
+                    <div class="card-avatar-wrapper">
+                        <img id="cardAvatarImg" class="card-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" alt="Logo">
+                    </div>
+
+                    <div class="card-identity">
+                        <div class="card-title" id="cardTitleText">Sarah Jenkins</div>
+                        <div class="card-subtitle" id="cardSubtitleText">Diseñadora UX / UI &amp; Creadora</div>
+                        <div class="card-description" id="cardDescriptionText">Ayudo a marcas modernas a diseñar plataformas digitales SaaS que convierten y escalan mensualmente.</div>
+                    </div>
+
+                    <div class="card-gallery" id="cardGalleryContainer"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500"></div>
+
+                    <div class="card-contact-section">
+                        <a href="tel:+573001234567" id="linkPhone" class="contact-item"><i class="fa-solid fa-phone"></i> <span id="textPhone">+57 3001234567</span></a>
+                        <a href="https://wa.me/573001234567" id="linkWhatsapp" class="contact-item" style="border-color: #25D366; background: rgba(37,211,102,0.05);"><i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> <span>Escríbeme por WhatsApp</span></a>
+                        <a href="#" id="linkAddress" class="contact-item"><i class="fa-solid fa-location-dot"></i> <span id="textAddress">Plaza Botero, Medellín</span></a>
+                        
+                        <!-- MAPA AMPLIADO -->
+                        <div id="mapContainer" style="margin-top: 10px; border-radius: 12px; overflow: hidden; height: 260px; background: var(--card-surface); border: 1px solid var(--card-border); display: block;">
+                            <iframe id="cardMapIframe" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" src="https://maps.google.com/maps?q=Plaza%20Botero%2C%20Medell%C3%ADn&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=&amp;output=embed"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="card-social-grid" id="cardSocialsContainer"><a href="https://instagram.com" target="_blank" class="social-icon-btn"><i class="fa-brands fa-instagram"></i></a><a href="https://facebook.com" target="_blank" class="social-icon-btn"><i class="fa-brands fa-facebook-f"></i></a><a href="https://linkedin.com" target="_blank" class="social-icon-btn"><i class="fa-brands fa-linkedin-in"></i></a><a href="https://maps.google.com" target="_blank" class="social-icon-btn"><i class="fa-brands fa-google"></i></a></div>
+
+                    <div class="qr-section">
+                        <div class="qr-title">Escanear para Compartir</div>
+                        <div class="qr-code-wrapper" id="qrContainer" title="https://foliopro.github.io/Dicard/hoover"><canvas width="140" height="140" style="display: none;"></canvas><img src="data:image/png;base64,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" style="display: block;"></div>
+                    </div>
+
+                    <div class="card-testimonials" id="cardTestimonialsContainer"><div class="block-title">Testimonios</div><div class="testimonial-item"><div class="testimonial-name">Carlos M.</div><div class="testimonial-text">"Excelente servicio, mi tarjeta quedó lista en minutos."</div></div></div>
+
+                    <div class="card-ctas" id="cardCtasContainer"><a class="cta-button" href="https://google.com" target="_blank">Descargar Catálogo 2026</a></div>
+
+                    <div class="distributor-card-footer" id="cardDistributorLocalFooter" style="display: block;">
+                        <p id="distLocalText">¿Quieres tu propia Tarjeta Digital? ¡Escríbeme!</p>
+                        <a id="distLocalLink" href="https://wa.me/573009999999?text=Hola,%20quiero%20mi%20Dicard." target="_blank">Distribuidor: Juan Pérez</a>
+                    </div>
+
+                    <div class="dicard-brand-footer">
+                        <a href="https://wa.me/573117715353?text=Hola%20quiero%20ser%20distribuidor" target="_blank">
+                            Creado por <span>Dicard Pro V 3.0</span>
+                        </a>
+                    </div>
+
+                
+    </div>
+</body>
+</html>
