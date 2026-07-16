@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transporte Personalizado - Viaja Seguro, Viaja Tranquilo</title>
+
+    <!-- METAS PARA COMPARTIR EN WHATSAPP Y REDES -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://foliopro.github.io/Dicard/Valeria.html">
+    <meta property="og:title" content="Transporte Personalizado">
+    <meta property="og:description" content="Viaja Seguro, Viaja Tranquilo">
+    <meta property="og:image" content="https://i.ibb.co/N2htt38w/logo.webp">
+    <meta property="og:image:width" content="300">
+    <meta property="og:image:height" content="300">
+
+    <!-- METAS PARA TWITTER / X -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Transporte Personalizado">
+    <meta name="twitter:description" content="Viaja Seguro, Viaja Tranquilo">
+    <meta name="twitter:image" content="https://i.ibb.co/N2htt38w/logo.webp">
+
+    <!-- Fuentes e Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --card-bg: #090D16;
+            --card-surface: #1E293B;
+            --card-accent: #6366F1;
+            --card-text: #FFFFFF;
+            --card-muted: #94A3B8;
+            --card-border: rgba(255, 255, 255, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+        
+        body { background-color: #0B0F19; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
+        
+        .container-responsive {
+            width: 100%; max-width: 450px; background: var(--card-bg); color: var(--card-text);
+            min-height: 100vh; box-shadow: 0 0 30px rgba(0,0,0,0.2); position: relative; display: flex; flex-direction: column;
+        }
+
+        .qr-code-wrapper img { margin: 0 auto; }
+
+        .card-cover { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; }
+        
+        .card-avatar-wrapper {
+            width: 170px; height: 170px; margin: -85px auto 0 auto;
+            position: relative; z-index: 5; border-radius: 50%;
+            padding: 5px; background: var(--card-bg);
+        }
+        .card-avatar { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; border: 2px solid var(--card-border); }
+
+        .card-identity { text-align: center; padding: 20px 20px 10px 20px; }
+        .card-title { font-size: 24px; font-weight: 800; margin-bottom: 4px; text-align: center; }
+        .card-subtitle { font-size: 14px; color: var(--card-accent); font-weight: 700; margin-bottom: 12px; text-align: center; }
+        .card-description { font-size: 13px; color: var(--card-muted); line-height: 1.6; text-align: center; }
+
+        .card-gallery { padding: 0 20px; display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .card-gallery img { width: 100%; height: auto; border-radius: 12px; display: block; transition: transform 0.2s; }
+        .card-gallery a { text-decoration: none; display: block; overflow: hidden; border-radius: 12px; }
+        .card-gallery a:hover img { transform: scale(1.02); }
+        .card-gallery video { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: 12px; display: block; }
+
+        .card-contact-section { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .contact-item {
+            display: flex; align-items: center; gap: 12px;
+            background: var(--card-surface); padding: 14px;
+            border-radius: 12px; text-decoration: none; color: var(--card-text);
+            font-size: 13px; border: 1px solid var(--card-border);
+        }
+        .contact-item i { font-size: 16px; color: var(--card-accent); width: 20px; text-align: center; }
+
+        .card-social-grid { display: flex; justify-content: center; gap: 12px; padding: 10px 20px; flex-wrap: wrap; }
+        .social-icon-btn {
+            width: 45px; height: 45px; background: var(--card-surface);
+            border: 1px solid var(--card-border); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            color: var(--card-text); font-size: 18px; text-decoration: none;
+        }
+
+        .qr-section {
+            display: flex; flex-direction: column; align-items: center; padding: 20px;
+            background: var(--card-surface); margin: 10px 20px;
+            border-radius: 14px; border: 1px solid var(--card-border);
+        }
+        .qr-title { font-size: 12px; text-transform: uppercase; color: var(--card-muted); margin-bottom: 12px; font-weight: 700; letter-spacing: 0.5px; }
+        .qr-code-wrapper { background: white; padding: 12px; border-radius: 10px; display: inline-block; }
+
+        .card-testimonials { padding: 20px; }
+        .block-title { font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--card-muted); margin-bottom: 12px; font-weight: 700; text-align: center;}
+        .testimonial-item { background: var(--card-surface); border: 1px solid var(--card-border); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+        .testimonial-name { font-size: 14px; font-weight: 700; color: var(--card-accent); margin-bottom: 6px; }
+        .testimonial-text { font-size: 13px; color: var(--card-text); line-height: 1.5; font-style: italic; }
+
+        .card-ctas { padding: 0 20px 20px 20px; display: flex; flex-direction: column; gap: 12px; }
+        .cta-button {
+            width: 100%; background: var(--card-accent); color: #ffffff;
+            padding: 16px; border-radius: 12px; text-align: center;
+            text-decoration: none; font-weight: 700; font-size: 14px; display: block;
+        }
+
+        .distributor-card-footer { padding: 20px; border-top: 1px solid var(--card-border); text-align: center; background: var(--card-surface); }
+        .distributor-card-footer p { font-size: 12px; color: var(--card-text); margin-bottom: 8px; font-weight: 600;}
+        .distributor-card-footer a { font-size: 12px; color: var(--card-accent); text-decoration: none; font-weight: 700; }
+
+        .dicard-brand-footer { padding: 20px; text-align: center; font-size: 12px; }
+        .dicard-brand-footer a { color: var(--card-muted); text-decoration: none; }
+        .dicard-brand-footer a span { color: var(--card-accent); font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="container-responsive">
+        
+                    <img id="cardCoverImg" class="card-cover" src="https://i.ibb.co/GvzQcDqX/Portada2.webp" alt="Portada">
+                    
+                    <div class="card-avatar-wrapper">
+                        <img id="cardAvatarImg" class="card-avatar" src="https://i.ibb.co/N2htt38w/logo.webp" alt="Logo">
+                    </div>
+
+                    <div class="card-identity">
+                        <div class="card-title" id="cardTitleText">Transporte Personalizado</div>
+                        <div class="card-subtitle" id="cardSubtitleText">Viaja Seguro, Viaja Tranquilo</div>
+                        <div class="card-description" id="cardDescriptionText">Ayudo a personas que valoran su tranquilidad a moverse sin afanes ni dolores de cabeza. Transformo tus trayectos en momentos de puro relax y comodidad, dándote la libertad de leer, trabajar o simplemente descansar mientras yo me encargo de llevarte seguro a tu destino</div>
+                    </div>
+
+                    <div class="card-gallery" id="cardGalleryContainer"><img src="https://i.ibb.co/p6hFv4Hq/01.webp"><img src="https://i.ibb.co/cSJmV168/02.webp"><img src="https://i.ibb.co/LzzB6JzM/03.webp"><img src="https://i.ibb.co/Rp2d6ndK/04.webp"><img src="https://i.ibb.co/DHhCNbWZ/05.webp"><img src="https://i.ibb.co/QxMpc48/06.webp"></div>
+
+                    <div class="card-contact-section">
+                        <a href="tel:+573235758949" id="linkPhone" class="contact-item"><i class="fa-solid fa-phone"></i> <span id="textPhone">+57 3235758949</span></a>
+                        <a href="#" id="linkAddress" class="contact-item"><i class="fa-solid fa-location-dot"></i> <span id="textAddress">Sant Rosa de Cabal, Risaralda</span></a>
+                        
+                        <div id="mapContainer" style="margin-top: 10px; border-radius: 12px; overflow: hidden; height: 260px; background: var(--card-surface); border: 1px solid var(--card-border); display: block;">
+                            <iframe id="cardMapIframe" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" src="https://maps.google.com/maps?q=Sant%20Rosa%20de%20Cabal%2C%20Risaralda&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=&amp;output=embed"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="card-social-grid" id="cardSocialsContainer"><a href="https://instagram.com" target="_blank" class="social-icon-btn"><i class="fa-brands fa-instagram"></i></a><a href="https://facebook.com" target="_blank" class="social-icon-btn"><i class="fa-brands fa-facebook-f"></i></a><a href="https://linkedin.com" target="_blank" class="social-icon-btn"><i class="fa-brands fa-linkedin-in"></i></a><a href="https://maps.google.com" target="_blank" class="social-icon-btn"><i class="fa-brands fa-google"></i></a></div>
+
+                    <div class="qr-section">
+                        <div class="qr-title">Escanear para Compartir</div>
+                        <div class="qr-code-wrapper" id="qrContainer" title="https://foliopro.github.io/Dicard/Valeria.html"><canvas width="140" height="140" style="display: none;"></canvas><img src="data:image/png;base64,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" style="display: block;"></div>
+                    </div>
+
+                    <div class="card-testimonials" id="cardTestimonialsContainer"><div class="block-title">Testimonios</div><div class="testimonial-item"><div class="testimonial-name">Carlos M.</div><div class="testimonial-text">"Excelente servicio,muy comodo y tranquilo. Los recomiendo"</div></div><div class="testimonial-item"><div class="testimonial-name">Marino Salazar</div><div class="testimonial-text">"Cumplidos al recogerme. Muy amables."</div></div><div class="testimonial-item"><div class="testimonial-name">Sofia  Gonzalez</div><div class="testimonial-text">"El servicio y atención excelente. Los recomiendo"</div></div></div>
+
+                    <div class="card-ctas" id="cardCtasContainer"><a class="cta-button" href="https://wa.link/5xsts3" target="_blank">Solicita  tu Servicio o Cotización AQUI</a></div>
+
+                    <div class="distributor-card-footer" id="cardDistributorLocalFooter" style="display: block;">
+                        <p id="distLocalText">¿Quieres tu propia Tarjeta Digital? ¡Escríbeme!</p>
+                        <a id="distLocalLink" href="https://wa.me/573117715353?text=Hola,%20quiero%20mi%20Dicard." target="_blank">Distribuidor: Cesar Cano</a>
+                    </div>
+
+                    <div class="dicard-brand-footer" id="mainBrandFooter">
+                        <a href="https://wa.me/573117715353?text=Hola%20quiero%20ser%20distribuidor" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;">
+                            <span style="color: var(--card-muted); font-size: 13px; font-weight: 500;">Creado con</span> 
+                            <img src="https://i.ibb.co/C5X57FhD/image.png" alt="DiCard" style="height: 24px; width: auto; object-fit: contain; vertical-align: middle;">
+                        </a>
+                    </div>
+
+                
+    </div>
+</body>
+</html>
