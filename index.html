@@ -9,7 +9,7 @@
     <!-- Fuente Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;80-link0&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Librería QR Code -->
@@ -63,7 +63,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* BARRA SUPERIOR ORIGINAL */
+        /* BARRA SUPERIOR */
         header {
             height: 65px;
             background: var(--bg-panel);
@@ -79,9 +79,7 @@
         .logo-link { text-decoration: none; color: inherit; transition: opacity 0.2s; }
         .logo-link:hover { opacity: 0.85; }
 
-        .logo-area { display: flex; align-items: center; gap: 10px; }
-        .logo-icon { background: var(--platform-accent); color: white; padding: 6px; border-radius: 8px; }
-        .logo-area h1 { font-size: 16px; font-weight: 700; }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
 
         .action-bar { display: flex; align-items: center; gap: 10px; }
         
@@ -177,7 +175,7 @@
         .card-preview-content::-webkit-scrollbar { width: 4px; }
         .card-preview-content::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }
 
-        /* AJUSTE EXCLUSIVO PARA EL PREVIEW */
+        /* PORTADA */
         .card-preview-content .card-cover { 
             width: 100%; 
             aspect-ratio: 16/10; 
@@ -213,9 +211,11 @@
         .card-subtitle { font-size: 14px; color: var(--card-accent); font-weight: 700; margin-bottom: 12px; text-align: center; }
         .card-description { font-size: 13px; color: var(--card-muted); line-height: 1.6; text-align: center; }
 
-        /* GALERÍA CON MEDIA Y VIDEOS EN 16:10 */
+        /* GALERÍA */
         .card-gallery { padding: 0 20px; display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
-        .card-gallery img { width: 100%; height: auto; border-radius: 12px; display: block; }
+        .card-gallery img { width: 100%; height: auto; border-radius: 12px; display: block; transition: transform 0.2s; }
+        .card-gallery a { text-decoration: none; display: block; overflow: hidden; border-radius: 12px; }
+        .card-gallery a:hover img { transform: scale(1.02); }
         .card-gallery video { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: 12px; display: block; }
 
         .card-contact-section { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
@@ -277,7 +277,6 @@
         .modal-body { flex: 1; padding: 20px; }
         .modal-body textarea { width: 100%; height: 100%; background: var(--bg-main); color: #10B981; font-family: monospace; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); resize: none; }
         
-        /* Grupo de botones en la cabecera del Modal */
         .modal-header-actions { display: flex; align-items: center; gap: 10px; }
         .btn-copy-code {
             background: var(--platform-accent);
@@ -306,12 +305,12 @@
 <body>
 
     <header>
-<a href="#" class="logo-link">
-        <div class="logo-area" style="display: flex; align-items: center; gap: 12px;">
-            <img src="https://i.ibb.co/C5X57FhD/image.png" alt="DiCard Logo" style="height: 48px; width: auto; object-fit: contain; display: block;">
-            <h1 style="font-size: 18px; font-weight: 800; letter-spacing: 0.5px;">Dicard Pro V 3.0</h1>
-        </div>
-    </a>
+        <a href="#" class="logo-link">
+            <div class="logo-area">
+                <img src="https://i.ibb.co/C5X57FhD/image.png" alt="DiCard Logo" style="height: 45px; width: auto; object-fit: contain; display: block;">
+                <h1 style="font-size: 18px; font-weight: 800; letter-spacing: 0.5px;">Dicard Pro V 3.0</h1>
+            </div>
+        </a>
 
         <div class="action-bar">
             <button class="btn-action btn-theme" onclick="toggleTheme()" title="Cambiar Tema de Plataforma">☀️/🌙</button>
@@ -390,10 +389,10 @@
             </div>
 
             <div>
-                <div class="section-title"><span class="material-symbols-rounded">view_carousel</span> Galería</div>
+                <div class="section-title"><span class="material-symbols-rounded">view_carousel</span> Galería y Vitrina</div>
                 <div class="form-group">
-                    <label>URLs (Imágenes o MP4 - Una por línea)</label>
-                    <textarea id="inputLandingImages" rows="4" oninput="updateCard()">https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500</textarea>
+                    <label>Estructura: link_imagen | link_accion (Uno por línea)</label>
+                    <textarea id="inputLandingImages" rows="4" oninput="updateCard()">https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500 | https://wa.me/573117715353?text=Hola%20quiero%20saber%20mas</textarea>
                 </div>
             </div>
         </div>
@@ -422,7 +421,6 @@
                         <a href="#" id="linkPhone" class="contact-item"><i class="fa-solid fa-phone"></i> <span id="textPhone"></span></a>
                         <a href="#" id="linkAddress" class="contact-item"><i class="fa-solid fa-location-dot"></i> <span id="textAddress"></span></a>
                         
-                        <!-- MAPA AMPLIADO -->
                         <div id="mapContainer" style="margin-top: 10px; border-radius: 12px; overflow: hidden; height: 260px; background: var(--card-surface); border: 1px solid var(--card-border);">
                             <iframe id="cardMapIframe" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                         </div>
@@ -444,12 +442,13 @@
                         <a id="distLocalLink" href="#" target="_blank"></a>
                     </div>
 
-<div class="dicard-brand-footer" style="padding: 25px; text-align: center;">
-    <a href="https://wa.me/573117715353?text=Hola%20quiero%20ser%20distribuidor" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;">
-        <span style="color: var(--card-muted); font-size: 13px; font-weight: 500;">Creado con DiCard Pro V 3.0</span> 
-        <img src="https://i.ibb.co/ZwFdPxt/logro-transp.png" alt="DiCard" style="height: 24px; width: auto; object-fit: contain; vertical-align: middle;">
-    </a>
-</div>
+                    <div class="dicard-brand-footer" id="mainBrandFooter">
+                        <a href="https://wa.me/573117715353?text=Hola%20quiero%20ser%20distribuidor" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;">
+                            <span style="color: var(--card-muted); font-size: 13px; font-weight: 500;">Creado con</span> 
+                            <img src="https://i.ibb.co/C5X57FhD/image.png" alt="DiCard" style="height: 24px; width: auto; object-fit: contain; vertical-align: middle;">
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -457,8 +456,15 @@
         <!-- PANEL DERECHO -->
         <div class="panel-right">
             <div>
-                <div class="section-title"><span class="material-symbols-rounded">qr_code</span> Configurar QR</div>
-                <div class="form-group"><label>Enlace del QR (URL de la Tarjeta)</label><input type="text" id="inputQrUrl" value="https://dicardpro.com/sarah-jenkins" oninput="updateCard()"></div>
+                <div class="section-title"><span class="material-symbols-rounded">qr_code</span> Enlace Dinámico y QR</div>
+                <div class="form-group">
+                    <label>Ruta de Almacenamiento (Local Storage)</label>
+                    <input type="text" id="inputRoute" value="" placeholder="Ej: https://miusuario.github.io/dicard/" oninput="actualizarRutaLocalStorage()">
+                </div>
+                <div class="form-group">
+                    <label>Nombre del Archivo HTML</label>
+                    <input type="text" id="inputHtmlName" value="sarah.html" placeholder="Ej: nombre-cliente.html" oninput="updateCard()">
+                </div>
             </div>
 
             <div>
@@ -529,6 +535,25 @@
         let currentAccent = '#6366F1';
         let qrcodeInstance = null;
 
+        // Inicializar ruta desde localStorage o por defecto
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedRoute = localStorage.getItem('dicard_ruta_almacenamiento');
+            const inputRoute = document.getElementById('inputRoute');
+            
+            if (savedRoute) {
+                inputRoute.value = savedRoute;
+            } else {
+                inputRoute.value = "https://cambiar-ruta-de-almacenamiento.com/";
+            }
+            updateCard();
+        });
+
+        function actualizarRutaLocalStorage() {
+            const inputRoute = document.getElementById('inputRoute').value;
+            localStorage.setItem('dicard_ruta_almacenamiento', inputRoute);
+            updateCard();
+        }
+
         function toggleTheme() {
             document.body.classList.toggle('light-theme');
         }
@@ -558,6 +583,17 @@
             updateCard();
         }
 
+        // Obtener la URL combinada de forma segura
+        function getCombinadaUrl() {
+            let base = document.getElementById('inputRoute').value.trim();
+            let file = document.getElementById('inputHtmlName').value.trim();
+            
+            if (!base.endsWith('/')) {
+                base += '/';
+            }
+            return base + file;
+        }
+
         function updateCard() {
             document.getElementById('cardCoverImg').src = document.getElementById('inputCover').value;
             document.getElementById('cardAvatarImg').src = document.getElementById('inputAvatar').value;
@@ -566,19 +602,37 @@
             document.getElementById('cardSubtitleText').innerText = document.getElementById('inputSubtitle').value;
             document.getElementById('cardDescriptionText').innerText = document.getElementById('inputDescription').value;
 
-            // Galería
+            // Galería con links dinámicos
             const galleryContainer = document.getElementById('cardGalleryContainer');
             galleryContainer.innerHTML = '';
             const lines = document.getElementById('inputLandingImages').value.split('\n');
-            lines.forEach(url => {
-                let cleanUrl = url.trim();
-                if(cleanUrl !== "") {
-                    if(cleanUrl.endsWith('.mp4') || cleanUrl.includes('video')) {
-                        let video = document.createElement('video'); video.src = cleanUrl; video.controls = true; video.muted = true;
-                        galleryContainer.appendChild(video);
+            
+            lines.forEach(line => {
+                let cleanLine = line.trim();
+                if(cleanLine !== "") {
+                    let parts = cleanLine.split('|');
+                    let mediaUrl = parts[0].trim();
+                    let targetUrl = parts[1] ? parts[1].trim() : null;
+
+                    let mediaElement;
+                    if(mediaUrl.endsWith('.mp4') || mediaUrl.includes('video')) {
+                        mediaElement = document.createElement('video'); 
+                        mediaElement.src = mediaUrl; 
+                        mediaElement.controls = true; 
+                        mediaElement.muted = true;
                     } else {
-                        let img = document.createElement('img'); img.src = cleanUrl;
-                        galleryContainer.appendChild(img);
+                        mediaElement = document.createElement('img'); 
+                        mediaElement.src = mediaUrl;
+                    }
+
+                    if (targetUrl) {
+                        let linkWrap = document.createElement('a');
+                        linkWrap.href = targetUrl;
+                        linkWrap.target = "_blank";
+                        linkWrap.appendChild(mediaElement);
+                        galleryContainer.appendChild(linkWrap);
+                    } else {
+                        galleryContainer.appendChild(mediaElement);
                     }
                 }
             });
@@ -615,12 +669,12 @@
                 }
             });
 
-            // QR
-            const qrUrl = document.getElementById('inputQrUrl').value.trim();
+            // QR Dinámico en base a la unión de la ruta y el nombre html
+            const finalQrUrl = getCombinadaUrl();
             const qrContainer = document.getElementById('qrContainer');
             qrContainer.innerHTML = '';
-            if (qrUrl !== "") {
-                qrcodeInstance = new QRCode(qrContainer, { text: qrUrl, width: 140, height: 140, colorDark: "#000000", colorLight: "#ffffff" });
+            if (finalQrUrl !== "") {
+                qrcodeInstance = new QRCode(qrContainer, { text: finalQrUrl, width: 140, height: 140, colorDark: "#000000", colorLight: "#ffffff" });
             }
 
             // Testimonios
@@ -666,13 +720,13 @@
             } else { footerContainer.style.display = "none"; }
         }
 
-        // CÓDIGO HTML COMPILADO CON METAETIQUETAS DINÁMICAS ACTUALIZADAS DESDE LOS INPUTS
+        // CÓDIGO HTML COMPILADO
         function obtenerHTMLConstruido() {
             const currentCardHTML = document.getElementById('cardPreview').innerHTML;
             const title = document.getElementById('inputTitle').value || 'Mi Tarjeta Digital';
             const subtitle = document.getElementById('inputSubtitle').value || 'Contacto Digital';
-            const avatarImgUrl = document.getElementById('inputAvatar').value || '';
-            const qrUrl = document.getElementById('inputQrUrl').value || window.location.href;
+            const avatarImgUrl = document.getElementById('inputAvatar').value || 'https://i.ibb.co/C5X57FhD/image.png';
+            const finalRouteUrl = getCombinadaUrl();
             
             let text = '#FFFFFF';
             let muted = '#94A3B8';
@@ -688,9 +742,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title} - ${subtitle}</title>
 
-    <!-- METAETIQUETAS DINÁMICAS PARA COMPARTIR EN WHATSAPP, FACEBOOK Y REDES (OPEN GRAPH) -->
+    <!-- METAS PARA COMPARTIR EN WHATSAPP Y REDES -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="${qrUrl}">
+    <meta property="og:url" content="${finalRouteUrl}">
     <meta property="og:title" content="${title}">
     <meta property="og:description" content="${subtitle}">
     <meta property="og:image" content="${avatarImgUrl}">
@@ -727,10 +781,8 @@
 
         .qr-code-wrapper img { margin: 0 auto; }
 
-        /* PORTADA ORIGINAL (SIN MARGEN ARRIBA EN EL HTML EXPORTADO) */
         .card-cover { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; }
         
-        /* AVATAR */
         .card-avatar-wrapper {
             width: 170px; height: 170px; margin: -85px auto 0 auto;
             position: relative; z-index: 5; border-radius: 50%;
@@ -738,15 +790,15 @@
         }
         .card-avatar { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; border: 2px solid var(--card-border); }
 
-        /* TEXTOS DE IDENTIDAD CENTRADOS */
         .card-identity { text-align: center; padding: 20px 20px 10px 20px; }
         .card-title { font-size: 24px; font-weight: 800; margin-bottom: 4px; text-align: center; }
         .card-subtitle { font-size: 14px; color: var(--card-accent); font-weight: 700; margin-bottom: 12px; text-align: center; }
         .card-description { font-size: 13px; color: var(--card-muted); line-height: 1.6; text-align: center; }
 
-        /* GALERÍA CON MEDIA Y VIDEOS EN 16:10 */
         .card-gallery { padding: 0 20px; display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
-        .card-gallery img { width: 100%; height: auto; border-radius: 12px; display: block; }
+        .card-gallery img { width: 100%; height: auto; border-radius: 12px; display: block; transition: transform 0.2s; }
+        .card-gallery a { text-decoration: none; display: block; overflow: hidden; border-radius: 12px; }
+        .card-gallery a:hover img { transform: scale(1.02); }
         .card-gallery video { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: 12px; display: block; }
 
         .card-contact-section { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
@@ -806,7 +858,8 @@
 
         function nuevaDicard() {
             if(confirm("¿Estás seguro de que quieres limpiar todos los campos?")) {
-                document.querySelectorAll('input[type="text"], textarea').forEach(el => el.value = '');
+                document.querySelectorAll('input[type="text"]:not(#inputRoute), textarea').forEach(el => el.value = '');
+                document.getElementById('inputHtmlName').value = 'cliente.html';
                 updateCard();
             }
         }
@@ -823,7 +876,7 @@
                 subtitle: document.getElementById('inputSubtitle').value,
                 description: document.getElementById('inputDescription').value,
                 landingImages: document.getElementById('inputLandingImages').value,
-                qrUrl: document.getElementById('inputQrUrl').value,
+                htmlName: document.getElementById('inputHtmlName').value,
                 address: document.getElementById('inputAddress').value,
                 ind: document.getElementById('inputInd').value,
                 cel: document.getElementById('inputCel').value,
@@ -857,7 +910,7 @@
                 document.getElementById('inputSubtitle').value = data.subtitle || '';
                 document.getElementById('inputDescription').value = data.description || '';
                 document.getElementById('inputLandingImages').value = data.landingImages || '';
-                document.getElementById('inputQrUrl').value = data.qrUrl || '';
+                document.getElementById('inputHtmlName').value = data.htmlName || 'cliente.html';
                 document.getElementById('inputAddress').value = data.address || '';
                 document.getElementById('inputInd').value = data.ind || '';
                 document.getElementById('inputCel').value = data.cel || '';
@@ -892,8 +945,6 @@
         function mostrarHTML() {
             let htmlConstruido = obtenerHTMLConstruido();
             document.getElementById('codeArea').value = htmlConstruido;
-            
-            // Reiniciamos el texto del botón de copiar al abrir el modal
             document.getElementById('btnCopyText').innerText = "Copiar Código";
             document.getElementById('codeModal').style.display = "flex";
         }
@@ -902,8 +953,6 @@
 
         function copiarCodigoMemoria() {
             const codeArea = document.getElementById('codeArea');
-            
-            // Intentar copiar usando la API del portapapeles moderna
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(codeArea.value).then(() => {
                     marcarCopiadoExitoso();
@@ -911,19 +960,18 @@
                     copiarFallback(codeArea);
                 });
             } else {
-                // Alternativa antigua para navegadores que no soportan Clipboard API
                 copiarFallback(codeArea);
             }
         }
 
         function copiarFallback(element) {
             element.select();
-            element.setSelectionRange(0, 99999); /* Para móviles */
+            element.setSelectionRange(0, 99999);
             try {
                 document.execCommand('copy');
                 marcarCopiadoExitoso();
             } catch (err) {
-                alert('No se pudo copiar de manera automática. Por favor selecciona el código manualmente.');
+                alert('No se pudo copiar de manera automática. Selecciona el código manualmente.');
             }
         }
 
@@ -935,13 +983,16 @@
             }, 2000);
         }
 
+        // Exportación automatizada usando el nombre del HTML configurado
         function exportarHTML() {
+            let nombreArchivo = document.getElementById('inputHtmlName').value.trim();
+            if(!nombreArchivo.endsWith('.html')) {
+                nombreArchivo += '.html';
+            }
             const blob = new Blob([obtenerHTMLConstruido()], { type: 'text/html' });
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-            a.download = `${document.getElementById('inputTitle').value || 'tarjeta'}-dicard.html`; a.click();
+            a.download = nombreArchivo; a.click();
         }
-
-        window.onload = updateCard;
     </script>
 </body>
 </html>
