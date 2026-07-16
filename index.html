@@ -864,7 +864,15 @@
             }
         }
 
+        // CORRECCIÓN AQUÍ: El guardado JSON ahora usa el nombre personalizado del archivo html
         function guardarJson() {
+            const htmlName = document.getElementById('inputHtmlName').value.trim();
+            // Eliminamos la extensión .html para que se guarde limpio como .json
+            let baseName = htmlName.replace(/\.html$/i, '');
+            if (!baseName) {
+                baseName = document.getElementById('inputTitle').value.trim() || 'config-dicard';
+            }
+
             const data = {
                 colorBg: currentBg,
                 colorSurface: currentSurface,
@@ -894,7 +902,7 @@
             };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-            a.download = `dicard-${data.title || 'export'}.json`; a.click();
+            a.download = `${baseName}.json`; a.click();
         }
 
         function cargarJson(event) {
