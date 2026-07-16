@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sarah Jenkins - Diseñadora UX / UI & Creadora</title>
 
-    <!-- METAETIQUETAS DINÁMICAS PARA COMPARTIR EN WHATSAPP, FACEBOOK Y REDES (OPEN GRAPH) -->
+    <!-- METAS PARA COMPARTIR EN WHATSAPP Y REDES -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://foliopro.github.io/Dicard/hover.html">
+    <meta property="og:url" content="https://dicardpro.com/sarah-jenkins">
     <meta property="og:title" content="Sarah Jenkins">
     <meta property="og:description" content="Diseñadora UX / UI & Creadora">
     <meta property="og:image" content="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300">
@@ -44,10 +44,8 @@
 
         .qr-code-wrapper img { margin: 0 auto; }
 
-        /* PORTADA ORIGINAL (SIN MARGEN ARRIBA EN EL HTML EXPORTADO) */
         .card-cover { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; }
         
-        /* AVATAR */
         .card-avatar-wrapper {
             width: 170px; height: 170px; margin: -85px auto 0 auto;
             position: relative; z-index: 5; border-radius: 50%;
@@ -55,15 +53,15 @@
         }
         .card-avatar { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; border: 2px solid var(--card-border); }
 
-        /* TEXTOS DE IDENTIDAD CENTRADOS */
         .card-identity { text-align: center; padding: 20px 20px 10px 20px; }
         .card-title { font-size: 24px; font-weight: 800; margin-bottom: 4px; text-align: center; }
         .card-subtitle { font-size: 14px; color: var(--card-accent); font-weight: 700; margin-bottom: 12px; text-align: center; }
         .card-description { font-size: 13px; color: var(--card-muted); line-height: 1.6; text-align: center; }
 
-        /* GALERÍA CON MEDIA Y VIDEOS EN 16:10 */
         .card-gallery { padding: 0 20px; display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
-        .card-gallery img { width: 100%; height: auto; border-radius: 12px; display: block; }
+        .card-gallery img { width: 100%; height: auto; border-radius: 12px; display: block; transition: transform 0.2s; }
+        .card-gallery a { text-decoration: none; display: block; overflow: hidden; border-radius: 12px; }
+        .card-gallery a:hover img { transform: scale(1.02); }
         .card-gallery video { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: 12px; display: block; }
 
         .card-contact-section { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
@@ -128,13 +126,12 @@
                         <div class="card-description" id="cardDescriptionText">Ayudo a marcas modernas a diseñar plataformas digitales SaaS que convierten y escalan mensualmente.</div>
                     </div>
 
-                    <div class="card-gallery" id="cardGalleryContainer"><img src="https://i.ibb.co/KzFzMvXP/00.png"><img src="https://i.ibb.co/n8sGzDgQ/01.png"><img src="https://i.ibb.co/XfwjCVbW/02.png"><img src="https://i.ibb.co/FLp4MzJJ/03.png"><img src="https://i.ibb.co/0pB5L29F/04.png"><img src="https://i.ibb.co/3mJLfX65/05.png"><img src="https://i.ibb.co/6cZnSQP4/06.png"><img src="https://i.ibb.co/Rkb1rYf0/07.png"><img src="https://i.ibb.co/21FcZGs5/08.png"><img src="https://i.ibb.co/zWrZ4c8W/09.png"><img src="https://i.ibb.co/4wchTG66/10.png"><img src="https://i.ibb.co/xKGGj48k/11.png"><img src="https://i.ibb.co/kV5D6pG0/12.png"><img src="https://i.ibb.co/FkBkJKRp/13.png"><img src="https://i.ibb.co/zWWwKSFB/14-B.png"><img src="https://i.ibb.co/LDt5R3dn/14.png"><img src="https://i.ibb.co/Xfkn8RLz/15.png"><img src="https://i.ibb.co/w2mFGnc/16.png"><img src="https://i.ibb.co/sdDyY3k3/17.png"><img src="https://i.ibb.co/d4x70rs9/18.png"><img src="https://i.ibb.co/x8fr23QK/18a.png"><img src="https://i.ibb.co/nq1nqTWX/20.png"><video src="https://assets.cdn.filesafe.space/Nb7rhmhbhERWfg7HQ6Ok/media/6a52da24708c41d4dff88dcf.mp4" controls=""></video></div>
+                    <div class="card-gallery" id="cardGalleryContainer"><a href="https://wa.me/573117715353?text=Hola%20quiero%20saber%20mas" target="_blank"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500"></a></div>
 
                     <div class="card-contact-section">
                         <a href="tel:+573001234567" id="linkPhone" class="contact-item"><i class="fa-solid fa-phone"></i> <span id="textPhone">+57 3001234567</span></a>
                         <a href="#" id="linkAddress" class="contact-item"><i class="fa-solid fa-location-dot"></i> <span id="textAddress">Plaza Botero, Medellín</span></a>
                         
-                        <!-- MAPA AMPLIADO -->
                         <div id="mapContainer" style="margin-top: 10px; border-radius: 12px; overflow: hidden; height: 260px; background: var(--card-surface); border: 1px solid var(--card-border); display: block;">
                             <iframe id="cardMapIframe" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" src="https://maps.google.com/maps?q=Plaza%20Botero%2C%20Medell%C3%ADn&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=&amp;output=embed"></iframe>
                         </div>
@@ -144,7 +141,7 @@
 
                     <div class="qr-section">
                         <div class="qr-title">Escanear para Compartir</div>
-                        <div class="qr-code-wrapper" id="qrContainer" title="https://foliopro.github.io/Dicard/hover.html"><canvas width="140" height="140" style="display: none;"></canvas><img src="data:image/png;base64,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" style="display: block;"></div>
+                        <div class="qr-code-wrapper" id="qrContainer" title="https://dicardpro.com/sarah-jenkins"><canvas width="140" height="140" style="display: none;"></canvas><img src="data:image/png;base64,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" style="display: block;"></div>
                     </div>
 
                     <div class="card-testimonials" id="cardTestimonialsContainer"><div class="block-title">Testimonios</div><div class="testimonial-item"><div class="testimonial-name">Carlos M.</div><div class="testimonial-text">"Excelente servicio, mi tarjeta quedó lista en minutos."</div></div></div>
@@ -156,9 +153,10 @@
                         <a id="distLocalLink" href="https://wa.me/573009999999?text=Hola,%20quiero%20mi%20Dicard." target="_blank">Distribuidor: Juan Pérez</a>
                     </div>
 
-                    <div class="dicard-brand-footer">
-                        <a href="https://wa.me/573117715353?text=Hola%20quiero%20ser%20distribuidor" target="_blank">
-                            Creado por <span>Dicard Pro V 3.0</span>
+                    <div class="dicard-brand-footer" id="mainBrandFooter">
+                        <a href="https://wa.me/573117715353?text=Hola%20quiero%20ser%20distribuidor" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;">
+                            <span style="color: var(--card-muted); font-size: 13px; font-weight: 500;">Creado con</span> 
+                            <img src="https://i.ibb.co/C5X57FhD/image.png" alt="DiCard" style="height: 24px; width: auto; object-fit: contain; vertical-align: middle;">
                         </a>
                     </div>
 
