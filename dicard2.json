@@ -1,29 +1,202 @@
-{
-  "colorBg": "#1C0D02",
-  "colorSurface": "#3D1C02",
-  "colorAccent": "#F97316",
-  "isLightMode": false,
-  "cover": "https://i.ibb.co/9mZMJR24/gportada.png",
-  "avatar": "https://i.ibb.co/bjYNQnfL/logotipowebp-dc.webp",
-  "adPreview": "https://foliopro.github.io/Dicard/dicard.html",
-  "title": "DI CARD PRO",
-  "subtitle": "No mostramos lo que vendes.  Revelamos lo que tus clientes sueñan vivir.",
-  "description": "Visual DNA Marketing™\nNo diseñamos tarjetas digitales.\nDescubrimos la esencia de tu negocio, entendemos qué sueñan realmente tus clientes y convertimos esa transformación en una experiencia visual que emociona, conecta y vende",
-  "landingImages": "https://i.ibb.co/Mx8W56C0/secreto-01.png\nhttps://i.ibb.co/jskMrhh/secreto-02.png\nhttps://i.ibb.co/Cs1ZGrVP/secreto-03.png\nhttps://i.ibb.co/jPSkHfJn/secreto-04.png\nhttps://i.ibb.co/vvLLD1q8/secreto-05.png\nhttps://i.ibb.co/BVqYXZ3L/secreto-06.png\nhttps://i.ibb.co/gLYMTF3w/secreto-07.png\nhttps://i.ibb.co/4ZPqt22d/secreto-08.png\nhttps://i.ibb.co/99fTMj3R/secreto-09.png\nhttps://i.ibb.co/LXCrVfss/secreto-10.png\nhttps://i.ibb.co/4ZC5YsfF/secreto-11.png\n",
-  "htmlName": "dicard2.html",
-  "address": "Calle 17 # 15 49 local 501, Armenia",
-  "ind": "+57",
-  "cel": "3117715353",
-  "wppFloatText": "¡Hola! Quiero construir mi  ADN DIGITAL. Mi nombre es",
-  "distName": "Cesar Cano",
-  "distWpp": "573117715353",
-  "testimonials": "⭐⭐⭐⭐⭐ Laura García  - Propietaria de Elegance Salon | \"Pensaba que mis clientes elegían un salón por los servicios. Hoy entendí que primero conectan con lo que sienten al descubrir tu marca. DiCard Pro logró mostrar la esencia de mi negocio de una forma que jamás habría imaginado. Ahora mis clientas llegan sintiendo confianza incluso antes de escribirme.\"\n⭐⭐⭐⭐⭐ Carlos Ruiz  -Consultor de Negocios  | \"Creía que necesitaba una mejor presentación. Lo que recibí fue mucho más que eso: una experiencia que comunica quién soy y el valor que aporto. Mis prospectos entienden mi propuesta antes de nuestra primera conversación y eso ha cambiado completamente la calidad de mis reuniones.\"\n⭐⭐⭐⭐⭐Ana Martínez - Asesora Inmobiliaria | \"Siempre pensé que vendía propiedades. DiCard Pro me hizo descubrir que realmente ayudo a las personas a encontrar el lugar donde construir su futuro. Esa forma de comunicar mi trabajo ha generado mucha más confianza y una conexión inmediata con mis clientes.\"\n⭐⭐⭐⭐⭐ ",
-  "ctas": "Pregunta por  nuestra Promocion  de Lanzamiento  |https://wa.link/6cesyd",
-  "redes": {
-    "insta": "https://instagram.com",
-    "face": "https://facebook.com",
-    "tiktok": "",
-    "linkedin": "https://linkedin.com",
-    "google": "https://maps.google.com"
-  }
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DI CARD PRO - No mostramos lo que vendes.  Revelamos lo que tus clientes sueñan vivir.</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://foliopro.github.io/Dicard/dicard2.html">
+    <meta property="og:title" content="DI CARD PRO">
+    <meta property="og:description" content="No mostramos lo que vendes.  Revelamos lo que tus clientes sueñan vivir.">
+    <meta property="og:image" content="https://foliopro.github.io/Dicard/dicard.html">
+    <meta property="og:image:width" content="300">
+    <meta property="og:image:height" content="300">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="DI CARD PRO">
+    <meta name="twitter:description" content="No mostramos lo que vendes.  Revelamos lo que tus clientes sueñan vivir.">
+    <meta name="twitter:image" content="https://foliopro.github.io/Dicard/dicard.html">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --card-bg: #1C0D02;
+            --card-surface: #3D1C02;
+            --card-accent: #F97316;
+            --card-text: #FFFFFF;
+            --card-muted: #94A3B8;
+            --card-border: rgba(255, 255, 255, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+        
+        body { background-color: #0B0F19; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
+        
+        .container-responsive {
+            width: 100%; max-width: 450px; background: var(--card-bg); color: var(--card-text);
+            min-height: 100vh; box-shadow: 0 0 30px rgba(0,0,0,0.2); position: relative; display: flex; flex-direction: column;
+        }
+
+        .qr-code-wrapper img { margin: 0 auto; }
+
+        .card-cover { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; }
+        
+        .card-avatar-wrapper {
+            width: 170px; height: 170px; margin: -85px auto 0 auto;
+            position: relative; z-index: 5; border-radius: 50%;
+            padding: 5px; background: var(--card-bg);
+        }
+        .card-avatar { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; border: 2px solid var(--card-border); }
+
+        .card-identity { text-align: center; padding: 20px 20px 10px 20px; }
+        .card-title { font-size: 24px; font-weight: 800; margin-bottom: 4px; text-align: center; }
+        .card-subtitle { font-size: 14px; color: var(--card-accent); font-weight: 700; margin-bottom: 12px; text-align: center; }
+        .card-description { font-size: 13px; color: var(--card-muted); line-height: 1.6; text-align: center; }
+
+        .card-gallery { padding: 0 20px; display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .card-gallery img { width: 100%; height: auto; border-radius: 12px; display: block; transition: transform 0.2s; }
+        .card-gallery a { text-decoration: none; display: block; overflow: hidden; border-radius: 12px; }
+        .card-gallery a:hover img { transform: scale(1.02); }
+        .card-gallery video { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: 12px; display: block; }
+
+        .card-contact-section { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .contact-item {
+            display: flex; align-items: center; gap: 12px;
+            background: var(--card-surface); padding: 14px;
+            border-radius: 12px; text-decoration: none; color: var(--card-text);
+            font-size: 13px; border: 1px solid var(--card-border);
+        }
+        .contact-item i { font-size: 16px; color: var(--card-accent); width: 20px; text-align: center; }
+
+        .card-social-grid { display: flex; justify-content: center; gap: 12px; padding: 10px 20px; flex-wrap: wrap; }
+        .social-icon-btn {
+            width: 45px; height: 45px; background: var(--card-surface);
+            border: 1px solid var(--card-border); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            color: var(--card-text); font-size: 18px; text-decoration: none;
+        }
+
+        .qr-section {
+            display: flex; flex-direction: column; align-items: center; padding: 20px;
+            background: var(--card-surface); margin: 10px 20px;
+            border-radius: 14px; border: 1px solid var(--card-border);
+        }
+        .qr-title { font-size: 12px; text-transform: uppercase; color: var(--card-muted); margin-bottom: 12px; font-weight: 700; letter-spacing: 0.5px; }
+        .qr-code-wrapper { background: white; padding: 12px; border-radius: 10px; display: inline-block; }
+
+        .card-testimonials { padding: 20px; }
+        .block-title { font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--card-muted); margin-bottom: 12px; font-weight: 700; text-align: center;}
+        .testimonial-item { background: var(--card-surface); border: 1px solid var(--card-border); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+        .testimonial-name { font-size: 14px; font-weight: 700; color: var(--card-accent); margin-bottom: 6px; }
+        .testimonial-text { font-size: 13px; color: var(--card-text); line-height: 1.5; font-style: italic; }
+
+        .card-ctas { padding: 0 20px 20px 20px; display: flex; flex-direction: column; gap: 12px; }
+        .cta-button {
+            width: 100%; background: var(--card-accent); color: #ffffff;
+            padding: 16px; border-radius: 12px; text-align: center;
+            text-decoration: none; font-weight: 700; font-size: 14px; display: block;
+        }
+
+        .distributor-card-footer { padding: 20px; border-top: 1px solid var(--card-border); text-align: center; background: var(--card-surface); }
+        .distributor-card-footer p { font-size: 12px; color: var(--card-text); margin-bottom: 8px; font-weight: 600;}
+        .distributor-card-footer a { font-size: 12px; color: var(--card-accent); text-decoration: none; font-weight: 700; }
+
+        .dicard-brand-footer { padding: 20px; text-align: center; font-size: 12px; }
+        .dicard-brand-footer a { color: var(--card-muted); text-decoration: none; }
+        .dicard-brand-footer a span { color: var(--card-accent); font-weight: 700; }
+
+        /* BOTONES FLOTANTES DE CONTACTO */
+        .floating-contact-container {
+            position: fixed;
+            bottom: 25px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 100;
+        }
+        .btn-floating {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            font-size: 20px;
+            transition: transform 0.2s, filter 0.2s;
+        }
+        .btn-floating:hover {
+            transform: scale(1.1);
+            filter: brightness(1.1);
+        }
+        .btn-floating.btn-float-phone {
+            background-color: #3b82f6;
+        }
+        .btn-floating.btn-float-wpp {
+            background-color: #25d366;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-responsive">
+        
+                    <img id="cardCoverImg" class="card-cover" src="https://i.ibb.co/9mZMJR24/gportada.png" alt="Portada">
+                    
+                    <div class="card-avatar-wrapper">
+                        <img id="cardAvatarImg" class="card-avatar" src="https://i.ibb.co/bjYNQnfL/logotipowebp-dc.webp" alt="Logo">
+                    </div>
+
+                    <div class="card-identity">
+                        <div class="card-title" id="cardTitleText">DI CARD PRO</div>
+                        <div class="card-subtitle" id="cardSubtitleText">No mostramos lo que vendes.  Revelamos lo que tus clientes sueñan vivir.</div>
+                        <div class="card-description" id="cardDescriptionText">Visual DNA Marketing™<br>No diseñamos tarjetas digitales.<br>Descubrimos la esencia de tu negocio, entendemos qué sueñan realmente tus clientes y convertimos esa transformación en una experiencia visual que emociona, conecta y vende</div>
+                    </div>
+
+                    <div class="card-gallery" id="cardGalleryContainer"><img src="https://i.ibb.co/Mx8W56C0/secreto-01.png"><img src="https://i.ibb.co/jskMrhh/secreto-02.png"><img src="https://i.ibb.co/Cs1ZGrVP/secreto-03.png"><img src="https://i.ibb.co/jPSkHfJn/secreto-04.png"><img src="https://i.ibb.co/vvLLD1q8/secreto-05.png"><img src="https://i.ibb.co/BVqYXZ3L/secreto-06.png"><img src="https://i.ibb.co/gLYMTF3w/secreto-07.png"><img src="https://i.ibb.co/4ZPqt22d/secreto-08.png"><img src="https://i.ibb.co/99fTMj3R/secreto-09.png"><img src="https://i.ibb.co/LXCrVfss/secreto-10.png"><img src="https://i.ibb.co/4ZC5YsfF/secreto-11.png"></div>
+
+                    <div class="card-contact-section">
+                        <a href="tel:+573117715353" id="linkPhone" class="contact-item"><i class="fa-solid fa-phone"></i> <span id="textPhone">+57 3117715353</span></a>
+                        <a href="#" id="linkAddress" class="contact-item"><i class="fa-solid fa-location-dot"></i> <span id="textAddress">Calle 17 # 15 49 local 501, Armenia</span></a>
+                        
+                        <div id="mapContainer" style="margin-top: 10px; border-radius: 12px; overflow: hidden; height: 260px; background: var(--card-surface); border: 1px solid var(--card-border); display: block;">
+                            <iframe id="cardMapIframe" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" src="https://maps.google.com/maps?q=Calle%2017%20%23%2015%2049%20local%20501%2C%20Armenia&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=&amp;output=embed"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="card-social-grid" id="cardSocialsContainer"><a href="https://instagram.com" target="_blank" class="social-icon-btn"><i class="fa-brands fa-instagram"></i></a><a href="https://facebook.com" target="_blank" class="social-icon-btn"><i class="fa-brands fa-facebook-f"></i></a><a href="https://linkedin.com" target="_blank" class="social-icon-btn"><i class="fa-brands fa-linkedin-in"></i></a><a href="https://maps.google.com" target="_blank" class="social-icon-btn"><i class="fa-brands fa-google"></i></a></div>
+
+                    <div class="qr-section">
+                        <div class="qr-title">Escanear para Compartir</div>
+                        <div class="qr-code-wrapper" id="qrContainer" title="https://foliopro.github.io/Dicard/dicard2.html"><canvas width="140" height="140" style="display: none;"></canvas><img src="data:image/png;base64,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" style="display: block;"></div>
+                    </div>
+
+                    <div class="card-testimonials" id="cardTestimonialsContainer"><div class="block-title">Testimonios</div><div class="testimonial-item"><div class="testimonial-name">⭐⭐⭐⭐⭐ Laura García  - Propietaria de Elegance Salon</div><div class="testimonial-text">""Pensaba que mis clientes elegían un salón por los servicios. Hoy entendí que primero conectan con lo que sienten al descubrir tu marca. DiCard Pro logró mostrar la esencia de mi negocio de una forma que jamás habría imaginado. Ahora mis clientas llegan sintiendo confianza incluso antes de escribirme.""</div></div><div class="testimonial-item"><div class="testimonial-name">⭐⭐⭐⭐⭐ Carlos Ruiz  -Consultor de Negocios</div><div class="testimonial-text">""Creía que necesitaba una mejor presentación. Lo que recibí fue mucho más que eso: una experiencia que comunica quién soy y el valor que aporto. Mis prospectos entienden mi propuesta antes de nuestra primera conversación y eso ha cambiado completamente la calidad de mis reuniones.""</div></div><div class="testimonial-item"><div class="testimonial-name">⭐⭐⭐⭐⭐Ana Martínez - Asesora Inmobiliaria</div><div class="testimonial-text">""Siempre pensé que vendía propiedades. DiCard Pro me hizo descubrir que realmente ayudo a las personas a encontrar el lugar donde construir su futuro. Esa forma de comunicar mi trabajo ha generado mucha más confianza y una conexión inmediata con mis clientes.""</div></div></div>
+
+                    <div class="card-ctas" id="cardCtasContainer"><a class="cta-button" href="https://wa.link/6cesyd" target="_blank">Pregunta por  nuestra Promocion  de Lanzamiento</a></div>
+
+                    <div class="distributor-card-footer" id="cardDistributorLocalFooter" style="display: block;">
+                        <p id="distLocalText">¿Quieres tu propia Tarjeta Digital? ¡Escríbeme!</p>
+                        <a id="distLocalLink" href="https://wa.me/573117715353?text=Hola,%20quiero%20mi%20Dicard." target="_blank">Distribuidor: Cesar Cano</a>
+                    </div>
+
+                    <div class="dicard-brand-footer" id="mainBrandFooter">
+                        <a href="https://wa.me/573117715353?text=Hola%20quiero%20ser%20distribuidor" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;">
+                            <span style="color: var(--card-muted); font-size: 13px; font-weight: 500;">Creado con</span> 
+                            <img src="https://i.ibb.co/C5X57FhD/image.png" alt="DiCard" style="height: 24px; width: auto; object-fit: contain; vertical-align: middle;">
+                        </a>
+                    </div>
+
+                    <div class="floating-contact-container">
+                        <a href="tel:+573117715353" id="floatBtnPhone" class="btn-floating btn-float-phone" title="Llamar" style="display: flex;"><i class="fa-solid fa-phone"></i></a>
+                        <a href="https://wa.me/573117715353?text=%C2%A1Hola!%20Quiero%20construir%20mi%20%20ADN%20DIGITAL.%20Mi%20nombre%20es" id="floatBtnWpp" class="btn-floating btn-float-wpp" target="_blank" title="WhatsApp" style="display: flex;"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+
+                
+    </div>
+</body>
+</html>
